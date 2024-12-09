@@ -17,7 +17,7 @@ function saveGameState(){
 }
 
 
-
+//Demande le nom du joueur
 function askForName() {
   
 }
