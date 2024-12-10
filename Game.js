@@ -1,7 +1,8 @@
-const readline = require('readline'); // Pour interagir avec l'utilisateur via la console
-const PokemiltonMaster = require('./PokemiltonMaster'); // Replace 'your_classes_filename' with the actual filename
+const readline = require('readline') // Pour interagir avec l'utilisateur via la console
+const PokemiltonMaster = require('./PokemiltonMaster') // Replace 'your_classes_filename' with the actual filename
 const Pokemilton = require('./Pokemilton')
 const PokemiltonWorld = require('./PokemiltonWorld')
+const PokemiltonArena = require('./PokemiltonArena')
 const fs = require('fs'); // Pour gérer le système de fichiers
 
 // Création d'une interface pour lire et écrire dans la console
@@ -94,10 +95,16 @@ function proposeFirstPokemilton(rl) {
 
     //Attribution du Pokemilton sélectionné au Master
     pokemiltonMaster.pokemiltonCollection.push(selectedPokemilton)
-    console.log(`${pokemiltonMaster.name} received ${selectedPokemilton.name}\n`)
+    console.log(`${selectedPokemilton.name} has been added to your collection\n`)
     
     //Sauvegarde des données
     saveGameState()
+
+    //Création d'un monde
+    let newWorld = new PokemiltonWorld()
+    
+    newWorld.oneDayPasses()
+
 
   })
 }
