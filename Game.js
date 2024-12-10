@@ -5,6 +5,7 @@ const PokemiltonWorld = require('./PokemiltonWorld')
 const PokemiltonArena = require('./PokemiltonArena')
 const fs = require('fs'); // Pour gérer le système de fichiers
 
+
 // Création d'une interface pour lire et écrire dans la console
 const rl = readline.createInterface({
   input: process.stdin,
@@ -96,17 +97,61 @@ function proposeFirstPokemilton(rl) {
     //Attribution du Pokemilton sélectionné au Master
     pokemiltonMaster.pokemiltonCollection.push(selectedPokemilton)
     console.log(`${selectedPokemilton.name} has been added to your collection\n`)
-    
+
     //Sauvegarde des données
     saveGameState()
 
     //Création d'un monde
     let newWorld = new PokemiltonWorld()
-    
+
     newWorld.oneDayPasses()
 
 
   })
+}
+
+//Menu journée
+const menuDay = () => {
+  return (
+    "Que voulez-vous faire :\n" +
+    "1. Soigner votre Pokemilton\n" +
+    "2. Ressusciter votre Pokemilton\n" +
+    "3. Relacher un Pokemilton\n" +
+    "4. Renommer un pokemilton de votre collection\n" +
+    "5. Voir la collection\n" +
+    "6. Ne rien faire\n" +
+    "Votre choix: "
+  );
+};
+// Exécution.
+function run() {
+  rl.question(menuDay(), (answer) => {
+    switch (answer) {
+      case "1":
+        pokemiltonMaster.healPokemilton();
+        break;
+      case "2":
+        revivePokemilton(pokemilton);
+        break;
+      case "3":
+        releasePokemilton(pokemilton);
+        break;
+      case "4":
+        renamePokemilton(pokemilton);
+        break;
+      case "5":
+        showCollection();
+      case "6":
+        console.log("La journée passe...");
+        rl.close();
+        break;
+      default:
+        console.log("Choix incorrect");
+        console.clear();
+        run();
+    }
+  });
+  run();
 }
 
 function startGame() {

@@ -27,7 +27,7 @@ class PokemiltonWorld {
       console.log(msg)
       this.addLog(msg)
       this.oneDayPasses() //on passe à une nouvelle journée
-      Game.menuDay()
+      Game.menuDay() //on affiche le menu 
     }
   }
 
