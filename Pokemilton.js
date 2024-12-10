@@ -71,6 +71,11 @@ class Pokemilton {
     this.catchPhrase = this.generateCatchPhrase();
   }
 
+  // Retourne les infos d'un Pokemilton
+  getStats() {
+    return (`Name:${this.name} Level:${this.level} - Experience:${this.experienceMeter} - Attack: ${this.attackRange} - Defense: ${this.defenseRange} - Health: ${this.healthPool}`)
+  }
+
   // Crée des nom de pokemons en combinant 2 étudiants (strings) avec la méthode random
   generateRandomName() {
     const randomStudent1 =

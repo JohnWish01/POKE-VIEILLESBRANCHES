@@ -1,4 +1,4 @@
-const Game = require("./Game");
+const Pokemilton = require("./Pokemilton");
 
 class PokemiltonMaster {
   constructor(name) {
@@ -28,7 +28,12 @@ class PokemiltonMaster {
   }
 
   //Affiche la collection de Pokemilton
-  showCollection() {}
+  showCollection() {
+    for (let i = 0; i < this.pokemiltonCollection.length; i++) {
+      let currentPokemilton = new Pokemilton(this.pokemiltonCollection[i]) 
+      console.log(`${i++, currentPokemilton.getStats()}`)
+    }
+  }
 }
 
 module.exports = PokemiltonMaster;

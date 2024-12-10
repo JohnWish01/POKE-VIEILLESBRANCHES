@@ -100,13 +100,6 @@ function proposeFirstPokemilton(rl) {
 
     //Sauvegarde des données
     saveGameState()
-
-    //Création d'un monde
-    let newWorld = new PokemiltonWorld()
-
-    newWorld.oneDayPasses()
-
-
   })
 }
 
@@ -154,13 +147,25 @@ function run() {
   run();
 }
 
-function startGame() {
+async function startGame() {
 
   try {
     loadGameState(); // Charge les données depuis le fichier JSON
     console.log("JSON file processed successfully.\n");
 
     askForName()
+
+    let newWorld = new PokemiltonWorld()
+
+    let newArena = new PokemiltonArena()
+
+
+    // pokemiltonMaster.showCollection()
+
+   // newArena.choosePokemilton(pokemiltonMaster)
+    
+    //newWorld.oneDayPasses()
+
 
   } catch (error) {
     console.error("Error while processing JSON file:", error);

@@ -1,8 +1,5 @@
-
-const PokemiltonWorld = require('./PokemiltonWorld')
-
-
 let battleInProgress = 0
+let currentPokemilton
 
 class PokemiltonArena {
   constructor(pokemilton_1, pokemilton_2) {
@@ -14,19 +11,22 @@ class PokemiltonArena {
       switch (choice) {
         case '1':
           battleInProgress = 1
-          
+
           break
         case '2':
           console.log("Vous avez évincé le combat...")
-          newWorld.
-          break
+            break
       }
       console.log(`Hello Master ${pokemiltonMaster.name}, your adventure begins!\n`)
       proposeFirstPokemilton(rl)
     })
   }
 
-  choosePokemilton() {
+  choosePokemilton(pokemiltonMaster) {
+    console.log("Pokemiltons in your collection :")
+    for (let i = 0; i < pokemiltonMaster.pokemiltonCollection.length; i++) {
+      console.log(`${i++, pokemiltonMaster.pokemiltonCollection[i].getStats()}`)
+    }
 
   }
 
