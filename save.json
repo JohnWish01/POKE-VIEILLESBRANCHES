@@ -1,1 +1,22 @@
-[]
+{
+  "saved_on": "2024-12-10T15:34:28.218Z",
+  "PokemiltonMaster": {
+    "name": "5664645",
+    "pokemiltonCollection": [
+      {
+        "name": "Emmric",
+        "level": 1,
+        "experienceMeter": 0,
+        "attackRange": 4,
+        "defenseRange": 2,
+        "healthPool": 24,
+        "catchPhrase": "Pokemilton, go!"
+      }
+    ],
+    "healingItems": 5,
+    "reviveItems": 3,
+    "POKEBALLS": 10
+  },
+  "day": 1,
+  "logs": []
+}

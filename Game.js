@@ -14,19 +14,45 @@ const rl = readline.createInterface({
 
 let dataGame = []; //les données du jeu
 let pokemiltonMaster //le maître du jeu
-let pokemiltonsArr = [] //array contenant 3 Pokemilton généré aléatoirement  
+let world = new PokemiltonWorld()
 
-//Sauvegarde l'état du jeu
-function saveGameState() {
+function askQuestion(question) {
+  return new Promise((resolve) => {
+    rl.question(question, resolve);
+  });
+}
+
+function saveGameState(pokemiltonMaster, world) {
   try {
-    fs.writeFileSync('save.json', JSON.stringify(dataGame, null, 2)); // Écrit les données du jeu dans un fichier JSON
+    const saveData = {
+      saved_on: new Date().toISOString(),
+      PokemiltonMaster: {
+        name: pokemiltonMaster.name,
+        pokemiltonCollection: pokemiltonMaster.pokemiltonCollection,
+        healingItems: pokemiltonMaster.healingItems,
+        reviveItems: pokemiltonMaster.reviveItems,
+        POKEBALLS: pokemiltonMaster.POKEBALLS,
+      },
+      day: world.day,
+      logs: world.logs,
+    };
+    fs.writeFileSync("save.json", JSON.stringify(saveData, null, 2));
   } catch (error) {
     console.error("Error:", error); // Affiche une erreur en cas de problème
   }
 }
 
+// function loadGameState() {
+//   if (fs.existsSync("save.json")) {
+//     const saveData = JSON.parse(fs.readFileSync("save.json"));
+//     return saveData;
+//   }
+// }
+
+//Sauvegarde l'état du jeu
+
 //Chargement de l'état du jeu
-function loadGameState() {
+async function loadGameState() {
 
   const filePath = 'save.json'; // Chemin vers le fichier JSON
   const initialData = []; // Données initiales (tableau vide)
@@ -46,6 +72,7 @@ function loadGameState() {
 
       if (jsonString.trim().length === 0) {
         console.log("The JSON file is empty => repair done.");
+        world = new PokemiltonWorld()
         // resolve([]) est utilisé pour signaler que le chargement s'est terminé correctement
         // et que le programme peut continuer à fonctionner avec un tableau vide comme contenu des tâches.
         return resolve([]); // Retourne un tableau vide si le fichier est vide
@@ -63,16 +90,18 @@ function loadGameState() {
 }
 
 //Demande le nom du joueur
-function askForName() {
-  rl.question("What's your name Master ?:", (name) => {
-    pokemiltonMaster = new PokemiltonMaster(name)
-    console.log(`Hello Master ${pokemiltonMaster.name}, your adventure begins!\n`)
-    proposeFirstPokemilton(rl)
-  })
+async function askForName() {
+  let answer = await askQuestion("What's your name Master ?:")
+  pokemiltonMaster = new PokemiltonMaster(answer)
+  console.log(`Hello Master ${pokemiltonMaster.name}, your adventure begins!\n`)
 }
 
+
 //Choix entre 3 Pokemilton
-function proposeFirstPokemilton(rl) {
+async function proposeFirstPokemilton() {
+
+  let pokemiltonsArr = [] //array contenant 3 Pokemilton généré aléatoirement  
+  let selectedPokemilton
 
   for (let i = 0; i < 3; i++) {
     pokemiltonsArr[i] = new Pokemilton()
@@ -80,60 +109,63 @@ function proposeFirstPokemilton(rl) {
     console.log(`${i + 1} : ${name} - Level: ${level} - Stats: Attack range ${attackRange}, Defense range ${defenseRange}, Health pool ${healthPool}`)
   }
 
-  rl.question("Choose your first Pokemilton (1-3):", (pokemilton) => {
-    let selectedPokemilton
-    switch (pokemilton) {
-      case '1':
-        selectedPokemilton = pokemiltonsArr[0]
-        break
-      case '2':
-        selectedPokemilton = pokemiltonsArr[1]
-        break
-      case '3':
-        selectedPokemilton = pokemiltonsArr[2]
-        break
-    }
+  let answer = await askQuestion("Choose your first Pokemilton (1-3):")
 
-    //Attribution du Pokemilton sélectionné au Master
-    pokemiltonMaster.pokemiltonCollection.push(selectedPokemilton)
-    console.log(`${selectedPokemilton.name} has been added to your collection\n`)
+  switch (answer) {
+    case '1':
+      selectedPokemilton = pokemiltonsArr[0]
+      break
+    case '2':
+      selectedPokemilton = pokemiltonsArr[1]
+      break
+    case '3':
+      selectedPokemilton = pokemiltonsArr[2]
+      break
+  }
 
-    //Sauvegarde des données
-    saveGameState()
-  })
+  //Attribution du Pokemilton sélectionné au Master
+  pokemiltonMaster.pokemiltonCollection.push(selectedPokemilton)
+  console.log(`${selectedPokemilton.name} has been added to your collection\n`)
+
+  console.log("AFfichage de la collection :")
+  console.log(pokemiltonMaster.pokemiltonCollection)
+
+  //Sauvegarde des données
+  saveGameState(pokemiltonMaster, world)
 }
 
 //Menu journée
-const menuDay = () => {
-  return (
-    "Que voulez-vous faire :\n" +
-    "1. Soigner votre Pokemilton\n" +
-    "2. Ressusciter votre Pokemilton\n" +
-    "3. Relacher un Pokemilton\n" +
-    "4. Renommer un pokemilton de votre collection\n" +
-    "5. Voir la collection\n" +
-    "6. Ne rien faire\n" +
-    "Votre choix: "
-  );
-};
+const menuDay =
+  "Que voulez-vous faire :\n" +
+  "1. Soigner votre Pokemilton\n" +
+  "2. Ressusciter votre Pokemilton\n" +
+  "3. Relacher un Pokemilton\n" +
+  "4. Renommer un pokemilton de votre collection\n" +
+  "5. Voir la collection\n" +
+  "6. Ne rien faire\n" +
+  "Votre choix: "
+
 // Exécution.
-function run() {
-  rl.question(menuDay(), (answer) => {
+async function run() {
+
+  let answer = await askQuestion(menuDay)
+
+  rl.question(menuDay, (answer) => {
     switch (answer) {
       case "1":
-        pokemiltonMaster.healPokemilton();
+        pokemiltonMaster.healPokemilton(pokemilton);
         break;
       case "2":
-        revivePokemilton(pokemilton);
+        pokemiltonMaster.revivePokemilton(pokemilton);
         break;
       case "3":
-        releasePokemilton(pokemilton);
+        pokemiltonMaster.releasePokemilton(pokemilton);
         break;
       case "4":
-        renamePokemilton(pokemilton);
+        pokemiltonMaster.renamePokemilton(pokemilton);
         break;
       case "5":
-        showCollection();
+        pokemiltonMaster.showCollection();
       case "6":
         console.log("La journée passe...");
         rl.close();
@@ -144,26 +176,34 @@ function run() {
         run();
     }
   });
-  run();
+  saveGameState()
 }
 
 async function startGame() {
 
   try {
-    loadGameState(); // Charge les données depuis le fichier JSON
+    await loadGameState(); // Charge les données depuis le fichier JSON
     console.log("JSON file processed successfully.\n");
 
-    askForName()
+    await askForName()
 
-    let newWorld = new PokemiltonWorld()
+    await proposeFirstPokemilton()
+
+    await run()
+
+
+
+
+
+
 
     let newArena = new PokemiltonArena()
 
 
     // pokemiltonMaster.showCollection()
 
-   // newArena.choosePokemilton(pokemiltonMaster)
-    
+    // newArena.choosePokemilton(pokemiltonMaster)
+
     //newWorld.oneDayPasses()
 
 
