@@ -200,7 +200,7 @@ async function run(pokemiltonMaster) {
         console.log("Choix incorrect. Essayez de nouveau.");
         continue; // Redemande une réponse valide si l'utilisateur fait un choix invalide
     }
-    break; // Sort de la boucle si un choix valide est fait
+    //break; // Sort de la boucle si un choix valide est fait
   }
 
   // Sauvegarder l'état du jeu après toutes les actions
