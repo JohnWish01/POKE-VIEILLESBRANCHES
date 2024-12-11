@@ -74,8 +74,16 @@ async function loadGameState() {
       if (answer.toLowerCase() === "oui") {
         // Si l'utilisateur accepte, on parse les données JSON
         dataGame = JSON.parse(jsonString);
+
+        pokemiltonMaster = new PokemiltonMaster()
+        pokemiltonMaster = dataGame.PokemiltonMaster
+
+        world.saved_on = dataGame.saved_on
+        world.day = dataGame.day
+        world.logs = dataGame.logs       
+        
         gameInProgress = true;
-        console.log("Données de jeu chargées :", dataGame);
+        console.log("Données de jeu chargées\n",pokemiltonMaster + "\n",world);
       } else {
         console.log("Démarrage d'une nouvelle partie...");
         // Démarre une nouvelle partie si l'utilisateur refuse
@@ -153,7 +161,7 @@ const menuDay =
   "6. Ne rien faire\n" +
   "Votre choix: ";
 
-async function run() {
+async function run(pokemiltonMaster) {
   while (true) {
     let answer = await askQuestion(menuDay);
     switch (answer) {
@@ -173,11 +181,10 @@ async function run() {
         );
         break;
       case "4":
-        pokemiltonMaster.renamePokemilton();
-        break;
+        pokemiltonMaster.releasePokemilton()
       case "5":
         pokemiltonMaster.showCollection();
-        break;
+      break;
       case "6":
         console.log("La journée passe...");
         rl.close();
@@ -201,10 +208,13 @@ async function startGame() {
       await askForName();
       await proposeFirstPokemilton();
     }
-    await run(); // Lancer la boucle du menu principal
+    await run(pokemiltonMaster); // Lancer la boucle du menu principal
   } catch (error) {
     console.error("Error while processing JSON file:", error);
   }
 }
 
 startGame();
+
+
+module.exports = Game;

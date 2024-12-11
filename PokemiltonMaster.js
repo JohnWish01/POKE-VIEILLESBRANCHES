@@ -3,12 +3,46 @@ const Pokemilton = require("./Pokemilton");
 const Game = require("./Game");
 
 class PokemiltonMaster {
-  constructor(name) {
+ 
+  constructor() {
+    this.name = "";
+    this.pokemiltonCollection = [];
+    this.healingItems = 0; // Initial number of healing items
+    this.reviveItems = 0; // Initial number of revive items
+    this.POKEBALLS = 0; // Initial number of POKEBALLS
+  }
+
+  initializeWithDefaultValues(name) {
     this.name = name;
     this.pokemiltonCollection = [];
     this.healingItems = 5; // Initial number of healing items
     this.reviveItems = 3; // Initial number of revive items
     this.POKEBALLS = 10; // Initial number of POKEBALLS
+  }
+
+  // Getter for the name
+  get getName() {
+    return this.name;
+  }
+
+  // Getter for the pokemiltonCollection
+  get getPokemiltonCollection() {
+    return this.pokemiltonCollection;
+  }
+
+  // Getter for healingItems
+  get getHealingItems() {
+    return this.healingItems;
+  }
+
+  // Getter for reviveItems
+  get getReviveItems() {
+    return this.reviveItems;
+  }
+
+  // Getter for POKEBALLS
+  get getPokeballs() {
+    return this.POKEBALLS;
   }
 
   // Implémenger la fonction pour renommer un pokemon de la collection.
