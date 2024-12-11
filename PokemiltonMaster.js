@@ -1,4 +1,6 @@
+const { log } = require("console");
 const Pokemilton = require("./Pokemilton");
+const Game = require("./Game");
 
 class PokemiltonMaster {
   constructor(name) {
@@ -10,13 +12,17 @@ class PokemiltonMaster {
   }
 
   // Implémenger la fonction pour renommer un pokemon de la collection.
-  renamePokemilton(pokemilton, newName) {
-    const pokemiltonToRename = this.pokemiltonCollection.find(
-      (p) => p.name === pokemilton.name
-    );
-    if (pokemiltonToRename) {
-      pokemiltonToRename.name = newName;
-      console.log(`${pokemilton.name} a été renommé ${newName}!`);
+  async renamePokemilton() {
+    const nbrPoke = this.pokemiltonCollection.length;
+    console.log(this.showCollection());
+    let answer = await askQuestion("Quel Pokemilton voulez-vous renommer ? ");
+    answer = parseInt(answer);
+    if (answer >= 0 && answer < nbrPoke) {
+      const oldName = this.pokemiltonCollection[answer - 1].name;
+      const answer2 = await askQuestion("Entrez son nouveau nom. ");
+
+      this.pokemiltonCollection[answer - 1].name = answer2;
+      console.log(`${oldName} a été renommé ${answer2}!`);
     } else {
       console.log("Pokemilton introuvable dans votre collection !");
     }
@@ -74,5 +80,4 @@ class PokemiltonMaster {
     }
   }
 }
-
 module.exports = PokemiltonMaster;

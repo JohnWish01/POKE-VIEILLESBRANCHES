@@ -173,9 +173,7 @@ async function run() {
         );
         break;
       case "4":
-        pokemiltonMaster.renamePokemilton(
-          pokemiltonMaster.pokemiltonCollection[0]
-        );
+        pokemiltonMaster.renamePokemilton();
         break;
       case "5":
         pokemiltonMaster.showCollection();

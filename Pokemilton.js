@@ -73,7 +73,7 @@ class Pokemilton {
 
   // Retourne les infos d'un Pokemilton
   getStats() {
-    return (`Name:${this.name} Level:${this.level} - Experience:${this.experienceMeter} - Attack: ${this.attackRange} - Defense: ${this.defenseRange} - Health: ${this.healthPool}`)
+    return `Name:${this.name} Level:${this.level} - Experience:${this.experienceMeter} - Attack: ${this.attackRange} - Defense: ${this.defenseRange} - Health: ${this.healthPool}`;
   }
 
   // Crée des nom de pokemons en combinant 2 étudiants (strings) avec la méthode random
@@ -144,9 +144,3 @@ class Pokemilton {
 }
 
 module.exports = Pokemilton;
-
-/* Résumé :
-- crée une classe pokemilton qui simule un pokemon.
-- le pokemon à des attributs (nom, niveau, stats ATK-DEF-HEALTH, catchphrase).
-- il peut attaquer et gagner de l'expérience, évoluer et dire sa catchphrase.
-- les noms sont générés de manière random à partir de la liste student.*/
