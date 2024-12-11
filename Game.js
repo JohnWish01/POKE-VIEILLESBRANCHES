@@ -65,7 +65,7 @@ async function loadGameState() {
     if (jsonString.trim().length === 0) {
       console.log("Le fichier JSON est vide => initialisation du jeu.");
       world = new PokemiltonWorld(); // Initialisation d'un jeu exemple
-      return
+      return;
     } else {
       // Demande à l'utilisateur s'il veut charger la partie sauvegardée
       let answer = await askQuestion(
@@ -77,7 +77,8 @@ async function loadGameState() {
         dataGame = JSON.parse(jsonString);
 
         pokemiltonMaster = new PokemiltonMaster(dataGame.PokemiltonMaster.name);
-        pokemiltonMaster.pokemiltonCollection = dataGame.PokemiltonMaster.pokemiltonCollection;
+        pokemiltonMaster.pokemiltonCollection =
+          dataGame.PokemiltonMaster.pokemiltonCollection;
         pokemiltonMaster.healingItems = dataGame.PokemiltonMaster.healingItems;
         pokemiltonMaster.reviveItems = dataGame.PokemiltonMaster.reviveItems;
         pokemiltonMaster.POKEBALLS = dataGame.PokemiltonMaster.POKEBALLS;
@@ -101,7 +102,7 @@ async function loadGameState() {
   } catch (err) {
     console.error("Fichier corrompu. Réinitialisation du jeu.", err);
     fs.writeFileSync(filePath, JSON.stringify([], null, 4), "utf8");
-    dataGame = []
+    dataGame = [];
   }
 }
 
@@ -165,7 +166,8 @@ const menuDay =
   "3. Relâcher un Pokemilton\n" +
   "4. Renommer un pokemilton de votre collection\n" +
   "5. Voir la collection\n" +
-  "6. Ne rien faire\n" +
+  "6. Vérifier l'état\n" +
+  "7. Ne rien faire\n" +
   "Votre choix: ";
 
 async function run(pokemiltonMaster) {
@@ -193,6 +195,9 @@ async function run(pokemiltonMaster) {
         pokemiltonMaster.showCollection();
         break;
       case "6":
+        pokemiltonMaster.checkStatus();
+        break;
+      case "7":
         console.log("La journée passe...");
         rl.close();
         return; // Quitte la fonction une fois la journée terminée
@@ -200,11 +205,10 @@ async function run(pokemiltonMaster) {
         console.log("Choix incorrect. Essayez de nouveau.");
         continue; // Redemande une réponse valide si l'utilisateur fait un choix invalide
     }
-    break; // Sort de la boucle si un choix valide est fait
+    // Sauvegarder l'état du jeu après toutes les actions
+    saveGameState(pokemiltonMaster, world);
+    //break; // Sort de la boucle si un choix valide est fait
   }
-
-  // Sauvegarder l'état du jeu après toutes les actions
-  saveGameState(pokemiltonMaster, world);
 }
 
 async function startGame() {

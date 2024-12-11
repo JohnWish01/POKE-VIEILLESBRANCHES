@@ -3,7 +3,6 @@ const Pokemilton = require("./Pokemilton");
 const Game = require("./Game");
 
 class PokemiltonMaster {
- 
   constructor(name) {
     this.name = "";
     this.pokemiltonCollection = [];
@@ -92,7 +91,28 @@ class PokemiltonMaster {
       console.log("Ce Pokemilton n'existe pas dans votre collection !");
     }
   }
-
+  // Méthode 2 pour vérifier le statut du pokemilton.
+  checkStatus(pokemilton) {
+    // Vérification du statut du pokemilton, comme sa santé et son expérience.
+    const status = {
+      name: pokemilton.name,
+      experienceMeter: pokemilton.experienceMeter,
+      healthPool: pokemilton.healthPool,
+    };
+    // Affichage du statut dans la console.
+    console.log(
+      `${status.name}, ${status.experienceMeter}, ${status.healthPool}`
+    );
+  }
+  checkMaster() {
+    const checkin = {
+      healingItems: this.healingItems,
+      reviveItems: this.reviveItems,
+    };
+    console.log(
+      `Il vous reste : ${checkin.healingItems} potion(s) de soin, et : ${checkin.reviveItems} potion(s) Revive. `
+    );
+  }
   // Montrer la collection
   showCollection() {
     if (this.pokemiltonCollection.length === 0) {

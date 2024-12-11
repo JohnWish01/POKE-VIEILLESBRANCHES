@@ -1,25 +1,16 @@
 {
-  "saved_on": "2024-12-11T15:21:26.846Z",
+  "saved_on": "2024-12-11T15:57:33.319Z",
   "PokemiltonMaster": {
     "name": "",
     "pokemiltonCollection": [
       {
-        "name": "Emmib",
+        "name": "rlottelie",
         "level": 1,
         "experienceMeter": 0,
-        "attackRange": 8,
-        "defenseRange": 3,
-        "healthPool": 24,
-        "catchPhrase": "I choose you!"
-      },
-      {
-        "name": "12345",
-        "level": 20,
-        "experienceMeter": 0,
-        "attackRange": 8,
-        "defenseRange": 3,
-        "healthPool": 24,
-        "catchPhrase": "I choose you!"
+        "attackRange": 4,
+        "defenseRange": 2,
+        "healthPool": 20,
+        "catchPhrase": "Pokemilton, go!"
       }
     ],
     "healingItems": 5,
