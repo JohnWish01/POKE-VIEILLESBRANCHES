@@ -65,6 +65,7 @@ async function loadGameState() {
     if (jsonString.trim().length === 0) {
       console.log("Le fichier JSON est vide => initialisation du jeu.");
       world = new PokemiltonWorld(); // Initialisation d'un jeu exemple
+      return
     } else {
       // Demande à l'utilisateur s'il veut charger la partie sauvegardée
       let answer = await askQuestion(
@@ -75,15 +76,22 @@ async function loadGameState() {
         // Si l'utilisateur accepte, on parse les données JSON
         dataGame = JSON.parse(jsonString);
 
-        pokemiltonMaster = new PokemiltonMaster()
-        pokemiltonMaster = dataGame.PokemiltonMaster
+        pokemiltonMaster = new PokemiltonMaster(dataGame.PokemiltonMaster.name);
+        pokemiltonMaster.pokemiltonCollection = dataGame.PokemiltonMaster.pokemiltonCollection;
+        pokemiltonMaster.healingItems = dataGame.PokemiltonMaster.healingItems;
+        pokemiltonMaster.reviveItems = dataGame.PokemiltonMaster.reviveItems;
+        pokemiltonMaster.POKEBALLS = dataGame.PokemiltonMaster.POKEBALLS;
 
-        world.saved_on = dataGame.saved_on
-        world.day = dataGame.day
-        world.logs = dataGame.logs       
-        
+        world.saved_on = dataGame.saved_on;
+        world.day = dataGame.day;
+        world.logs = dataGame.logs;
+
         gameInProgress = true;
-        console.log("Données de jeu chargées\n",pokemiltonMaster + "\n",world);
+        console.log(
+          "Données de jeu chargées\n",
+          pokemiltonMaster + "\n",
+          world
+        );
       } else {
         console.log("Démarrage d'une nouvelle partie...");
         // Démarre une nouvelle partie si l'utilisateur refuse
@@ -91,10 +99,9 @@ async function loadGameState() {
       }
     }
   } catch (err) {
-    console.error(
-      "Erreur lors de la lecture ou du parsing du fichier JSON :",
-      err
-    );
+    console.error("Fichier corrompu. Réinitialisation du jeu.", err);
+    fs.writeFileSync(filePath, JSON.stringify([], null, 4), "utf8");
+    dataGame = []
   }
 }
 
@@ -181,10 +188,10 @@ async function run(pokemiltonMaster) {
         );
         break;
       case "4":
-        pokemiltonMaster.releasePokemilton()
+        pokemiltonMaster.releasePokemilton();
       case "5":
         pokemiltonMaster.showCollection();
-      break;
+        break;
       case "6":
         console.log("La journée passe...");
         rl.close();
@@ -215,6 +222,5 @@ async function startGame() {
 }
 
 startGame();
-
 
 module.exports = Game;

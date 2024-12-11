@@ -4,16 +4,8 @@ const Game = require("./Game");
 
 class PokemiltonMaster {
  
-  constructor() {
+  constructor(name) {
     this.name = "";
-    this.pokemiltonCollection = [];
-    this.healingItems = 0; // Initial number of healing items
-    this.reviveItems = 0; // Initial number of revive items
-    this.POKEBALLS = 0; // Initial number of POKEBALLS
-  }
-
-  initializeWithDefaultValues(name) {
-    this.name = name;
     this.pokemiltonCollection = [];
     this.healingItems = 5; // Initial number of healing items
     this.reviveItems = 3; // Initial number of revive items
