@@ -1,14 +1,15 @@
 {
-  "saved_on": "2024-12-12T14:46:56.419Z",
+  "saved_on": "2024-12-12T16:01:03.711Z",
   "PokemiltonMaster": {
+    "name": "1",
     "pokemiltonCollection": [
       {
-        "name": "tineSco",
+        "name": "asGui",
         "level": 1,
         "experienceMeter": 0,
-        "attackRange": 7,
+        "attackRange": 3,
         "defenseRange": 2,
-        "healthPool": 16,
+        "healthPool": 18,
         "catchPhrase": "I choose you!"
       }
     ],

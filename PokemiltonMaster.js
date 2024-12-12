@@ -58,15 +58,19 @@ class PokemiltonMaster {
     const nbrPoke = this.pokemiltonCollection.length;
     this.showCollection();
     let answer = await askQuestion("Quel Pokemilton voulez-vous renommer ? ");
-    answer = parseInt(answer);
+    answer = parseInt(answer) - 1;
     if (answer >= 0 && answer < nbrPoke) {
-      const oldName = this.pokemiltonCollection[answer - 1].name;
-      const answer2 = await askQuestion("Entrez son nouveau nom. ");
-
-      this.pokemiltonCollection[answer - 1].name = answer2;
-      console.log(`${oldName} a été renommé ${answer2}!`);
+      let answer2 = await askQuestion("Entrez son nouveau nom.. ");
+      if (!answer2 || answer2.trim() === "") {
+        console.log("\nNom invalide, veuillez réessayer !");
+        return;
+      }
+      // Update du nom
+      this.pokemiltonCollection[answer].name = answer2.trim();
+      let oldName = this.pokemiltonCollection[answer].name;
+      console.log(`\n${oldName} a été renommé ${answer2}!`);
     } else {
-      console.log("Pokemilton introuvable dans votre collection !");
+      console.log("\nPokemilton introuvable dans votre collection !");
     }
   }
 
@@ -76,10 +80,10 @@ class PokemiltonMaster {
       pokemilton.healthPool = pokemilton.getRandomNumber(10, 30);
       this.healingItems -= 1;
       console.log(
-        `${pokemilton.name} a été soigné ! Il reste : ${this.healingItems}`
+        `\n${pokemilton.name} a été soigné ! Il reste : ${this.healingItems}`
       );
     } else {
-      console.log("Vous n'avez plus d'objet de soin!");
+      console.log("\nVous n'avez plus d'objet de soin!");
     }
   }
 
@@ -91,10 +95,10 @@ class PokemiltonMaster {
       );
       this.reviveItems -= 1;
       console.log(
-        `${pokemilton.name} a été ressuscité ! Il reste : ${this.reviveItems}`
+        `\n${pokemilton.name} a été ressuscité ! Il reste : ${this.reviveItems}`
       );
     } else {
-      console.log("Vous n'avez plus cet objet !");
+      console.log("\nVous n'avez plus cet objet !");
     }
   }
 
@@ -145,7 +149,6 @@ class PokemiltonMaster {
           `Name : ${pokemilton.name}, Niveau : ${pokemilton.level}, Expérience : ${pokemilton.experienceMeter}, Santé : ${pokemilton.healthPool}`
         );
       });
-      console.log("\n");
     }
   }
 }
