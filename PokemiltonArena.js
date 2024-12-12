@@ -5,22 +5,22 @@ class PokemiltonArena {
   constructor(pokemilton_1, pokemilton_2) {}
 
   startBattle() {
-    rl.question(
-      "A wild Pokemilton™ appears!:\nWhat do you want to do ? :\n1. Fight\n2. Run",
+    console.log("A wild Pokemilton™ appears!\n");
+    this.askQuestion(
+      "What do you want to do?\n1. Fight\n2. Run\n",
       (choice) => {
         switch (choice) {
           case "1":
-            battleInProgress = 1;
-
+            this.choosePokemilton();
             break;
           case "2":
             console.log("Vous avez évincé le combat...");
             break;
+          default:
+            console.log("Choix invalide.");
+            this.startBattle();
+            break;
         }
-        console.log(
-          `Hello Master ${pokemiltonMaster.name}, your adventure begins!\n`
-        );
-        proposeFirstPokemilton(rl);
       }
     );
   }

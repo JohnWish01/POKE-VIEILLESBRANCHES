@@ -163,7 +163,8 @@ const menuDay =
   "4. Renommer un Pokemilton de votre collection\n" +
   "5. Voir la collection\n" +
   "6. Vérifier l'état\n" +
-  "7. Ne rien faire\n" +
+  "7. Vérifier votre état\n" +
+  "8. Ne rien faire (Passer la journée)\n" +
   "Votre choix: ";
 
 async function run(pokemiltonMaster) {
@@ -192,9 +193,12 @@ async function run(pokemiltonMaster) {
         pokemiltonMaster.showCollection();
         break;
       case "6":
-        pokemiltonMaster.checkStatus(pokemiltonMaster);
+        pokemiltonMaster.checkStatus(pokemilton);
         break;
       case "7":
+        pokemiltonMaster.checkMaster();
+        break;
+      case "8":
         console.log("La journée passe...\n");
         rl.close();
         return; // Quitte la fonction une fois la journée terminée
