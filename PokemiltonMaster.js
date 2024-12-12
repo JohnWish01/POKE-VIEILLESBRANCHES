@@ -3,13 +3,22 @@ const Pokemilton = require("./Pokemilton");
 const Game = require("./Game");
 
 class PokemiltonMaster {
-  constructor(name) {
-    this.name = "";
-    this.pokemiltonCollection = [];
-    this.healingItems = 5; // Initial number of healing items
-    this.reviveItems = 3; // Initial number of revive items
-    this.POKEBALLS = 10; // Initial number of POKEBALLS
+  constructor({name, healingItems, reviveItems, POKEBALLS, pokemiltonCollection, }) {
+    this.name = name;
+    this.pokemiltonCollection = (pokemiltonCollection || []).map((p) => new Pokemilton(p));
+    this.healingItems = healingItems || 5; //Initial number of healing items
+    this.reviveItems = reviveItems || 3; //Initial number of revive items
+    this.POKEBALLS = POKEBALLS || 10; //Initial number of POKEBALLS
   }
+
+  // class PokemiltonMaster {
+  //   constructor(name) {
+  //     this.name = name;
+  //     this.pokemiltonCollection = (pokemiltonCollection || []).map(p => new Pokemilton(p));
+  //     this.healingItems = 5; // Initial number of healing items
+  //     this.reviveItems = 3; // Initial number of revive items
+  //     this.POKEBALLS = 10; // Initial number of POKEBALLS
+  //   }
 
   // Getter for the name
   get getName() {
@@ -118,13 +127,13 @@ class PokemiltonMaster {
     if (this.pokemiltonCollection.length === 0) {
       console.log("\nVotre collection est vide !");
     } else {
-      console.log("\nVotre collection de Pokemilton :\n")
+      console.log("\nVotre collection de Pokemilton :\n");
       this.pokemiltonCollection.forEach((pokemilton) => {
         console.log(
           `Name : ${pokemilton.name}, Niveau : ${pokemilton.level}, Santé : ${pokemilton.healthPool}`
         );
       });
-      console.log("\n")
+      console.log("\n");
     }
   }
 }

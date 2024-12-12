@@ -1,17 +1,26 @@
 {
-  "saved_on": "2024-12-12T07:37:21.507Z",
+  "saved_on": "2024-12-12T09:56:26.770Z",
   "PokemiltonMaster": {
-    "name": "",
+    "name": "Manu",
     "pokemiltonCollection": [
       {
-        "name": "aldinneNaj",
+        "name": "NicBry",
         "level": 1,
         "experienceMeter": 0,
-        "attackRange": 3,
-        "defenseRange": 3,
-        "healthPool": 25,
-        "catchPhrase": "Pokemilton, go!"
-      }
+        "attackRange": 2,
+        "defenseRange": 2,
+        "healthPool": 27,
+        "catchPhrase": "I choose you!"
+      },
+      {
+          "name": "Toto",
+          "level": 2,
+          "experienceMeter": 5,
+          "attackRange": 1,
+          "defenseRange": 4,
+          "healthPool": 12,
+          "catchPhrase": "I'm the best!"
+        }
     ],
     "healingItems": 5,
     "reviveItems": 3,
