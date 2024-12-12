@@ -12,7 +12,7 @@ class PokemiltonMaster {
   }) {
     this.name = name;
     this.pokemiltonCollection = (pokemiltonCollection || []).map(
-      (p) => new Pokemilton(p)
+      (p) => new Pokemilton()
     );
     this.healingItems = healingItems || 5; //Initial number of healing items
     this.reviveItems = reviveItems || 3; //Initial number of revive items
