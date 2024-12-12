@@ -1,4 +1,4 @@
-const locale = require('./locales/fr.json');
+const locale = require("./locales/fr.json");
 const readline = require("readline"); // Pour interagir avec l'utilisateur via la console
 const PokemiltonMaster = require("./PokemiltonMaster"); // Remplacez par le bon fichier
 const Pokemilton = require("./Pokemilton");
@@ -6,7 +6,6 @@ const PokemiltonWorld = require("./PokemiltonWorld");
 const PokemiltonArena = require("./PokemiltonArena");
 const fs = require("fs"); // Pour gérer le système de fichiers
 const path = require("path");
-// @ts-ignore
 const Game = require("./Game");
 
 // Création d'une interface pour lire et écrire dans la console
@@ -42,9 +41,9 @@ function saveGameState(pokemiltonMaster, world) {
       logs: world.logs,
     };
     fs.writeFileSync("save.json", JSON.stringify(saveData, null, 2));
-    console.log("\n",locale.saveOk,"\n");
+    console.log("\n", locale.saveOk, "\n");
   } catch (error) {
-    console.error("\n",locale.saveKo, error, "\n");
+    console.error("\n", locale.saveKo, error, "\n");
   }
 }
 
@@ -56,7 +55,7 @@ async function loadGameState() {
   console.clear();
   // Vérification si le fichier existe
   if (!fs.existsSync(filePath)) {
-    console.log("\n", locale.jsonNotFound,"\n");
+    console.log("\n", locale.jsonNotFound, "\n");
     // Création d'un fichier JSON vide si il n'existe pas
     fs.writeFileSync(filePath, JSON.stringify(initialData, null, 4), "utf8");
   }
@@ -66,7 +65,7 @@ async function loadGameState() {
     const jsonString = await fs.promises.readFile(filePath, "utf8");
 
     if (jsonString.trim().length === 0) {
-      console.log(locale.jsonEmpty,"\n");
+      console.log(locale.jsonEmpty, "\n");
       world = new PokemiltonWorld(); // Initialisation d'un jeu exemple
       return;
     } else {
@@ -86,16 +85,16 @@ async function loadGameState() {
         world.logs = dataGame.logs;
 
         nameNeeded = false; //le nom du master ne doit pas être renseigné, il a été chargé
-        console.log("\n",locale.dataLoaded,"\n");
+        console.log("\n", locale.dataLoaded, "\n");
       } else {
-        console.log("\n",locale.newGame,"\n");
+        console.log("\n", locale.newGame, "\n");
         // Démarre une nouvelle partie si l'utilisateur refuse
-        nameNeeded = true
+        nameNeeded = true;
         world = new PokemiltonWorld();
       }
     }
   } catch (err) {
-    console.error("\n",locale.jsonKo,"\n", err);
+    console.error("\n", locale.jsonKo, "\n", err);
     fs.writeFileSync(filePath, JSON.stringify([], null, 4), "utf8");
     dataGame = [];
   }
@@ -122,7 +121,7 @@ async function proposeFirstPokemilton() {
     console.log(
       `${
         i + 1
-      }: ${name} - Level: ${level} - Stats: Attack range ${attackRange}, Defense range ${defenseRange}, Health pool ${healthPool}`
+      }- ${name} - Level: ${level} - Stats: Attack range ${attackRange}, Defense range ${defenseRange}, Health pool ${healthPool}`
     );
   }
 
@@ -189,7 +188,7 @@ async function run(pokemiltonMaster) {
         );
         break;
       case "4":
-        pokemiltonMaster.renamePokemilton();
+        await pokemiltonMaster.renamePokemilton(askQuestion);
         break;
       case "5":
         pokemiltonMaster.showCollection();
@@ -208,7 +207,7 @@ async function run(pokemiltonMaster) {
         console.log("Choix incorrect. Essayez de nouveau.\n");
         continue; // Redemande une réponse valide si l'utilisateur fait un choix invalide
     }
-    saveGameState(pokemiltonMaster, world);  
+    saveGameState(pokemiltonMaster, world);
     //break; // Sort de la boucle si un choix valide est fait (A DECOMMENTER)
   }
 }

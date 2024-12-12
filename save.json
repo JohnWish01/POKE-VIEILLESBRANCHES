@@ -1,20 +1,20 @@
 {
-  "saved_on": "2024-12-12T13:52:44.899Z",
+  "saved_on": "2024-12-12T16:08:07.625Z",
   "PokemiltonMaster": {
     "name": "Manu",
     "pokemiltonCollection": [
       {
-        "name": "aldinnetien",
+        "name": "manolo",
         "level": 1,
         "experienceMeter": 0,
-        "attackRange": 4,
+        "attackRange": 3,
         "defenseRange": 2,
-        "healthPool": 11,
-        "catchPhrase": "I choose you!"
+        "healthPool": 17,
+        "catchPhrase": "Let the battle begin!"
       }
     ],
-    "healingItems": 0,
-    "reviveItems": 0,
+    "healingItems": 5,
+    "reviveItems": 3,
     "POKEBALLS": 10
   },
   "day": 1,

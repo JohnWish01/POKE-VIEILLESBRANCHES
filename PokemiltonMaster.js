@@ -19,15 +19,6 @@ class PokemiltonMaster {
     this.POKEBALLS = POKEBALLS || 10; //Initial number of POKEBALLS
   }
 
-  // class PokemiltonMaster {
-  //   constructor(name) {
-  //     this.name = name;
-  //     this.pokemiltonCollection = (pokemiltonCollection || []).map(p => new Pokemilton(p));
-  //     this.healingItems = 5; // Initial number of healing items
-  //     this.reviveItems = 3; // Initial number of revive items
-  //     this.POKEBALLS = 10; // Initial number of POKEBALLS
-  //   }
-
   // Getter for the name
   get getName() {
     return this.name;
@@ -53,17 +44,23 @@ class PokemiltonMaster {
     return this.POKEBALLS;
   }
 
-  // Implémenger la fonction pour renommer un pokemon de la collection.
-  async renamePokemilton() {
-    const nbrPoke = this.pokemiltonCollection.length;
-    console.log(this.showCollection());
-    let answer = await askQuestion("Quel Pokemilton voulez-vous renommer ? ");
-    answer = parseInt(answer);
-    if (answer >= 0 && answer < nbrPoke) {
-      const oldName = this.pokemiltonCollection[answer - 1].name;
-      const answer2 = await askQuestion("Entrez son nouveau nom. ");
+  askQuestion(question) {
+    return new Promise((resolve) => {
+      rl.question(question, resolve);
+    });
+  }
 
-      this.pokemiltonCollection[answer - 1].name = answer2;
+  // Implémenger la fonction pour renommer un pokemon de la collection.
+  async renamePokemilton(askQuestion) {
+    const nbrPoke = this.pokemiltonCollection.length;
+    this.showCollection();
+    let answer = await askQuestion("Quel Pokemilton voulez-vous renommer ? :");
+    answer = parseInt(answer-1);
+    if (answer >= 0 && answer < nbrPoke) {
+      const oldName = this.pokemiltonCollection[answer].name;
+      const answer2 = await askQuestion("Entrez son nouveau nom :");
+
+      this.pokemiltonCollection[answer].name = answer2.trim();
       console.log(`\n${oldName} a été renommé ${answer2}!`);
     } else {
       console.log("\nPokemilton introuvable dans votre collection !");
@@ -140,9 +137,11 @@ class PokemiltonMaster {
       console.log("\nVotre collection est vide !");
     } else {
       console.log("\nVotre collection de Pokemilton :");
+
+      let i=0
       this.pokemiltonCollection.forEach((pokemilton) => {
         console.log(
-          `Name : ${pokemilton.name}, Niveau : ${pokemilton.level}, Expérience : ${pokemilton.experienceMeter}, Santé : ${pokemilton.healthPool}`
+          `${i+1} - ${pokemilton.name}, Niveau: ${pokemilton.level}, Expérience: ${pokemilton.experienceMeter}, Santé: ${pokemilton.healthPool}`
         );
       });
     }
