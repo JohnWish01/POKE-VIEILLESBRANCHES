@@ -1,16 +1,16 @@
 {
-  "saved_on": "2024-12-12T07:37:21.507Z",
+  "saved_on": "2024-12-12T09:56:24.314Z",
   "PokemiltonMaster": {
-    "name": "",
+    "name": "n",
     "pokemiltonCollection": [
       {
-        "name": "aldinneNaj",
+        "name": "rrex",
         "level": 1,
         "experienceMeter": 0,
-        "attackRange": 3,
-        "defenseRange": 3,
-        "healthPool": 25,
-        "catchPhrase": "Pokemilton, go!"
+        "attackRange": 5,
+        "defenseRange": 1,
+        "healthPool": 20,
+        "catchPhrase": "I choose you!"
       }
     ],
     "healingItems": 5,

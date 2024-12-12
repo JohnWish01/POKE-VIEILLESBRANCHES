@@ -150,7 +150,9 @@ async function proposeFirstPokemilton() {
 
   // Attribution du Pokemilton sélectionné au Master
   pokemiltonMaster.pokemiltonCollection.push(selectedPokemilton);
-  console.log(`\n${selectedPokemilton.name} has been added to your collection\n`);
+  console.log(
+    `\n${selectedPokemilton.name} has been added to your collection\n`
+  );
 
   // Sauvegarde des données après le choix du premier Pokemilton
   saveGameState(pokemiltonMaster, world);
@@ -162,7 +164,7 @@ const menuDay =
   "1. Soigner votre Pokemilton\n" +
   "2. Ressusciter votre Pokemilton\n" +
   "3. Relâcher un Pokemilton\n" +
-  "4. Renommer un pokemilton de votre collection\n" +
+  "4. Renommer un Pokemilton de votre collection\n" +
   "5. Voir la collection\n" +
   "6. Vérifier l'état\n" +
   "7. Ne rien faire\n" +
@@ -188,7 +190,7 @@ async function run(pokemiltonMaster) {
         );
         break;
       case "4":
-        pokemiltonMaster.releasePokemilton();
+        pokemiltonMaster.renamePokemilton();
         break;
       case "5":
         pokemiltonMaster.showCollection();
