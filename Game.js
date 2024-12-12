@@ -1,3 +1,4 @@
+// @ts-nocheck
 const locale = require("./locales/fr.json");
 const readline = require("readline"); // Pour interagir avec l'utilisateur via la console
 const PokemiltonMaster = require("./PokemiltonMaster"); // Remplacez par le bon fichier
@@ -188,7 +189,7 @@ async function run(pokemiltonMaster) {
         );
         break;
       case "4":
-        await pokemiltonMaster.renamePokemilton(askQuestion);
+        pokemiltonMaster.renamePokemilton(askQuestion); // Ajout paramètre askQuestion.
         break;
       case "5":
         pokemiltonMaster.showCollection();

@@ -15,9 +15,9 @@ class PokemiltonArena {
   }
 
   startBattle() {
-    console.log("A wild Pokemilton™ appears!\n");
+    console.log("Un Pokemilton sauvage apparaît !\n");
     this.askQuestion(
-      "What do you want to do?\n1. Fight\n2. Run\n",
+      "Que voulez-vous faire ?\n1. Combattre\n2. Fuir\n",
       (choice) => {
         switch (choice) {
           case "1":

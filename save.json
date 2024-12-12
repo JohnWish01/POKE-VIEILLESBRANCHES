@@ -1,16 +1,16 @@
 {
-  "saved_on": "2024-12-12T16:08:07.625Z",
+  "saved_on": "2024-12-12T16:01:03.711Z",
   "PokemiltonMaster": {
-    "name": "Manu",
+    "name": "1",
     "pokemiltonCollection": [
       {
-        "name": "manolo",
+        "name": "asGui",
         "level": 1,
         "experienceMeter": 0,
         "attackRange": 3,
         "defenseRange": 2,
-        "healthPool": 17,
-        "catchPhrase": "Let the battle begin!"
+        "healthPool": 18,
+        "catchPhrase": "I choose you!"
       }
     ],
     "healingItems": 5,
