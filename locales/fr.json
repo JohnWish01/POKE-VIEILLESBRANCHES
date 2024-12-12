@@ -1,0 +1,13 @@
+{
+  "saveOk": "État du jeu sauvegardé.",
+  "saveKo": "Erreur rencontrée pendant la sauvegarde:",
+  "jsonNotFound": "Fichier JSON non trouvé => création du fichier.",
+  "jsonEmpty": "Le fichier JSON est vide => initialisation du jeu.",
+  "questionLoadData": "Des données existent, voulez-vous charger la partie ? (oui/non)",
+  "dataLoaded": "Les données du jeu sont chargées.",
+  "newGame": "Démarrage d'une nouvelle partie.",
+  "jsonKo": "Fichier corrompu. Réinitialisation du jeu :",
+  "questionMasterName": "Quel est votre nom ? :",
+  "hello": "Bonjour Master ",
+  "helloNext": ", votre aventure commence!"
+}

@@ -64,9 +64,9 @@ class PokemiltonMaster {
       const answer2 = await askQuestion("Entrez son nouveau nom. ");
 
       this.pokemiltonCollection[answer - 1].name = answer2;
-      console.log(`${oldName} a été renommé ${answer2}!`);
+      console.log(`\n${oldName} a été renommé ${answer2}!`);
     } else {
-      console.log("Pokemilton introuvable dans votre collection !");
+      console.log("\nPokemilton introuvable dans votre collection !");
     }
   }
 
@@ -76,10 +76,10 @@ class PokemiltonMaster {
       pokemilton.healthPool = pokemilton.getRandomNumber(10, 30);
       this.healingItems -= 1;
       console.log(
-        `${pokemilton.name} a été soigné ! Il reste : ${this.healingItems}`
+        `\n${pokemilton.name} a été soigné ! Il reste : ${this.healingItems}`
       );
     } else {
-      console.log("Vous n'avez plus d'objet de soin!");
+      console.log("\nVous n'avez plus d'objet de soin!");
     }
   }
 
@@ -91,10 +91,10 @@ class PokemiltonMaster {
       );
       this.reviveItems -= 1;
       console.log(
-        `${pokemilton.name} a été ressuscité ! Il reste : ${this.reviveItems}`
+        `\n${pokemilton.name} a été ressuscité ! Il reste : ${this.reviveItems}`
       );
     } else {
-      console.log("Vous n'avez plus cet objet !");
+      console.log("\nVous n'avez plus cet objet !");
     }
   }
 
@@ -145,7 +145,6 @@ class PokemiltonMaster {
           `Name : ${pokemilton.name}, Niveau : ${pokemilton.level}, Expérience : ${pokemilton.experienceMeter}, Santé : ${pokemilton.healthPool}`
         );
       });
-      console.log("\n");
     }
   }
 }
