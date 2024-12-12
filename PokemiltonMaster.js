@@ -54,9 +54,9 @@ class PokemiltonMaster {
   }
 
   // Implémenger la fonction pour renommer un pokemon de la collection.
-  async renamePokemilton() {
+  async renamePokemilton(askQuestion) {
     const nbrPoke = this.pokemiltonCollection.length;
-    console.log(this.showCollection());
+    this.showCollection();
     let answer = await askQuestion("Quel Pokemilton voulez-vous renommer ? ");
     answer = parseInt(answer);
     if (answer >= 0 && answer < nbrPoke) {
