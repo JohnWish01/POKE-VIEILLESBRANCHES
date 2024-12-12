@@ -101,11 +101,15 @@ class PokemiltonMaster {
   // Relacher un pokemon.
   releasePokemilton(pokemilton) {
     const index = this.pokemiltonCollection.indexOf(pokemilton);
-    if (index !== -1) {
+    if (this.pokemiltonCollection.length === 1) {
+      console.log(
+        "\nVous ne pouvez pas vous séparer de votre unique Pokemilton !\n"
+      );
+    } else if (index !== -1) {
       this.pokemiltonCollection.splice(index, 1);
-      console.log(`${pokemilton.name} a été relaché de votre collection !`);
+      console.log(`\n${pokemilton.name} a été relaché de votre collection !\n`);
     } else {
-      console.log("Ce Pokemilton n'existe pas dans votre collection !");
+      console.log("\nCe Pokemilton n'existe pas dans votre collection !\n");
     }
   }
   // Méthode 2 pour vérifier le statut du pokemilton.
@@ -127,7 +131,7 @@ class PokemiltonMaster {
       reviveItems: this.reviveItems,
     };
     console.log(
-      `\nIl vous reste : ${checkin.healingItems} potion(s) de soin, et : ${checkin.reviveItems} potion(s) Revive.\n`
+      `\nVotre état :\nIl vous reste : ${checkin.healingItems} potion(s) de soin, et ${checkin.reviveItems} potion(s) Revive.\n`
     );
   }
   // Montrer la collection
@@ -135,10 +139,10 @@ class PokemiltonMaster {
     if (this.pokemiltonCollection.length === 0) {
       console.log("\nVotre collection est vide !");
     } else {
-      console.log("\nVotre collection de Pokemilton :\n");
+      console.log("\nVotre collection de Pokemilton :");
       this.pokemiltonCollection.forEach((pokemilton) => {
         console.log(
-          `Name : ${pokemilton.name}, Niveau : ${pokemilton.level}, Santé : ${pokemilton.healthPool}`
+          `Name : ${pokemilton.name}, Niveau : ${pokemilton.level}, Expérience : ${pokemilton.experienceMeter}, Santé : ${pokemilton.healthPool}`
         );
       });
       console.log("\n");
