@@ -1,15 +1,15 @@
 {
-  "saved_on": "2024-12-12T11:18:31.992Z",
+  "saved_on": "2024-12-12T13:34:45.823Z",
   "PokemiltonMaster": {
     "pokemiltonCollection": [
       {
-        "name": "Chax",
+        "name": "rrelie",
         "level": 1,
         "experienceMeter": 0,
-        "attackRange": 8,
+        "attackRange": 1,
         "defenseRange": 2,
-        "healthPool": 27,
-        "catchPhrase": "Let the battle begin!"
+        "healthPool": 17,
+        "catchPhrase": "Pokemilton, go!"
       }
     ],
     "healingItems": 5,

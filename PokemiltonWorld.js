@@ -1,6 +1,7 @@
 const PokemiltonArena = require("./PokemiltonArena");
 const Pokemilton = require("./Pokemilton");
 const Game = require("./Game");
+const fs = require("fs");
 
 let pokemiltonArena;
 let msg = "";
@@ -8,16 +9,17 @@ let msg = "";
 class PokemiltonWorld {
   constructor() {
     this.day = 1;
+    //this.saved_on = null;
     this.logs = [];
   }
 
   oneDayPasses() {
     this.day++;
-    //this.randomizeEvent()
+    //this.randomizeEvent();
   }
 
   randomizeEvent() {
-    let num = Math.floor(Math.random(1) + 1);
+    let num = Math.floor(Math.random() + 1);
     if (num === 0) {
       pokemiltonArena = new PokemiltonArena();
       pokemiltonArena.startBattle();

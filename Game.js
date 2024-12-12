@@ -1,3 +1,4 @@
+// @ts-nocheck
 const readline = require("readline"); // Pour interagir avec l'utilisateur via la console
 const PokemiltonMaster = require("./PokemiltonMaster"); // Remplacez par le bon fichier
 const Pokemilton = require("./Pokemilton");
@@ -5,6 +6,7 @@ const PokemiltonWorld = require("./PokemiltonWorld");
 const PokemiltonArena = require("./PokemiltonArena");
 const fs = require("fs"); // Pour gérer le système de fichiers
 const path = require("path");
+// @ts-ignore
 const Game = require("./Game");
 
 // Création d'une interface pour lire et écrire dans la console
@@ -80,6 +82,7 @@ async function loadGameState() {
         const pokemiltonMasterData = dataGame.PokemiltonMaster;
         pokemiltonMaster = new PokemiltonMaster(pokemiltonMasterData);
 
+        // @ts-ignore
         world.saved_on = dataGame.saved_on;
         world.day = dataGame.day;
         world.logs = dataGame.logs;
@@ -193,7 +196,7 @@ async function run(pokemiltonMaster) {
         pokemiltonMaster.showCollection();
         break;
       case "6":
-        pokemiltonMaster.checkStatus(pokemilton);
+        pokemiltonMaster.checkStatus(Pokemilton);
         break;
       case "7":
         pokemiltonMaster.checkMaster();
