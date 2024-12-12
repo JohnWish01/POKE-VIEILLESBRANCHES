@@ -110,19 +110,21 @@ class PokemiltonMaster {
       reviveItems: this.reviveItems,
     };
     console.log(
-      `Il vous reste : ${checkin.healingItems} potion(s) de soin, et : ${checkin.reviveItems} potion(s) Revive. `
+      `\nIl vous reste : ${checkin.healingItems} potion(s) de soin, et : ${checkin.reviveItems} potion(s) Revive.\n`
     );
   }
   // Montrer la collection
   showCollection() {
     if (this.pokemiltonCollection.length === 0) {
-      console.log("Collection vide !");
+      console.log("\nVotre collection est vide !");
     } else {
+      console.log("\nVotre collection de Pokemilton :\n")
       this.pokemiltonCollection.forEach((pokemilton) => {
         console.log(
           `Name : ${pokemilton.name}, Niveau : ${pokemilton.level}, Santé : ${pokemilton.healthPool}`
         );
       });
+      console.log("\n")
     }
   }
 }

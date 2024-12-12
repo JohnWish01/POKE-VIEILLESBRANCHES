@@ -1,16 +1,16 @@
 {
-  "saved_on": "2024-12-11T15:40:27.241Z",
+  "saved_on": "2024-12-12T07:37:21.507Z",
   "PokemiltonMaster": {
     "name": "",
     "pokemiltonCollection": [
       {
-        "name": "calMar",
+        "name": "aldinneNaj",
         "level": 1,
         "experienceMeter": 0,
-        "attackRange": 1,
+        "attackRange": 3,
         "defenseRange": 3,
-        "healthPool": 23,
-        "catchPhrase": "Let the battle begin!"
+        "healthPool": 25,
+        "catchPhrase": "Pokemilton, go!"
       }
     ],
     "healingItems": 5,

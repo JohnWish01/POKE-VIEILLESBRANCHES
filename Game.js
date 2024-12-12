@@ -40,9 +40,9 @@ function saveGameState(pokemiltonMaster, world) {
       logs: world.logs,
     };
     fs.writeFileSync("save.json", JSON.stringify(saveData, null, 2));
-    console.log("État du jeu sauvegardé.");
+    console.log("\nÉtat du jeu sauvegardé.\n");
   } catch (error) {
-    console.error("Error during save:", error);
+    console.error("\nError during save:", error, "\n");
   }
 }
 
@@ -51,9 +51,10 @@ async function loadGameState() {
   const filePath = path.resolve("save.json"); // Résolution du chemin du fichier
   const initialData = []; // Données initiales vides
 
+  console.clear();
   // Vérification si le fichier existe
   if (!fs.existsSync(filePath)) {
-    console.log("Fichier JSON non trouvé => création du fichier.");
+    console.log("Fichier JSON non trouvé => création du fichier.\n");
     // Création d'un fichier JSON vide si il n'existe pas
     fs.writeFileSync(filePath, JSON.stringify(initialData, null, 4), "utf8");
   }
@@ -63,7 +64,7 @@ async function loadGameState() {
     const jsonString = await fs.promises.readFile(filePath, "utf8");
 
     if (jsonString.trim().length === 0) {
-      console.log("Le fichier JSON est vide => initialisation du jeu.");
+      console.log("Le fichier JSON est vide => initialisation du jeu.\n");
       world = new PokemiltonWorld(); // Initialisation d'un jeu exemple
       return;
     } else {
@@ -88,19 +89,15 @@ async function loadGameState() {
         world.logs = dataGame.logs;
 
         gameInProgress = true;
-        console.log(
-          "Données de jeu chargées\n",
-          pokemiltonMaster + "\n",
-          world
-        );
+        console.log("\nDonnées de jeu chargées\n");
       } else {
-        console.log("Démarrage d'une nouvelle partie...");
+        console.log("\nDémarrage d'une nouvelle partie...\n");
         // Démarre une nouvelle partie si l'utilisateur refuse
         world = new PokemiltonWorld();
       }
     }
   } catch (err) {
-    console.error("Fichier corrompu. Réinitialisation du jeu.", err);
+    console.error("\nFichier corrompu. Réinitialisation du jeu.\n", err);
     fs.writeFileSync(filePath, JSON.stringify([], null, 4), "utf8");
     dataGame = [];
   }
@@ -108,10 +105,10 @@ async function loadGameState() {
 
 // Demande le nom du joueur
 async function askForName() {
-  let answer = await askQuestion("What's your name Master ?:");
+  let answer = await askQuestion("\nWhat's your name Master ?:");
   pokemiltonMaster = new PokemiltonMaster(answer);
   console.log(
-    `Hello Master ${pokemiltonMaster.name}, your adventure begins!\n`
+    `\nHello Master ${pokemiltonMaster.name}, your adventure begins!\n`
   );
 }
 
@@ -147,12 +144,13 @@ async function proposeFirstPokemilton() {
         console.log("Choix invalide, veuillez entrer 1, 2 ou 3.");
         continue; // Répéter la question si la réponse est invalide
     }
+    console.clear();
     break;
   }
 
   // Attribution du Pokemilton sélectionné au Master
   pokemiltonMaster.pokemiltonCollection.push(selectedPokemilton);
-  console.log(`${selectedPokemilton.name} has been added to your collection\n`);
+  console.log(`\n${selectedPokemilton.name} has been added to your collection\n`);
 
   // Sauvegarde des données après le choix du premier Pokemilton
   saveGameState(pokemiltonMaster, world);
@@ -199,11 +197,11 @@ async function run(pokemiltonMaster) {
         pokemiltonMaster.checkStatus();
         break;
       case "7":
-        console.log("La journée passe...");
+        console.log("La journée passe...\n");
         rl.close();
         return; // Quitte la fonction une fois la journée terminée
       default:
-        console.log("Choix incorrect. Essayez de nouveau.");
+        console.log("Choix incorrect. Essayez de nouveau.\n");
         continue; // Redemande une réponse valide si l'utilisateur fait un choix invalide
     }
     //break; // Sort de la boucle si un choix valide est fait (A DECOMMENTER)
