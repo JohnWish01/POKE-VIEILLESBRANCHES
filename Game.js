@@ -77,12 +77,8 @@ async function loadGameState() {
         // Si l'utilisateur accepte, on parse les données JSON
         dataGame = JSON.parse(jsonString);
 
-        pokemiltonMaster = new PokemiltonMaster(dataGame.PokemiltonMaster.name);
-        pokemiltonMaster.pokemiltonCollection =
-          dataGame.PokemiltonMaster.pokemiltonCollection;
-        pokemiltonMaster.healingItems = dataGame.PokemiltonMaster.healingItems;
-        pokemiltonMaster.reviveItems = dataGame.PokemiltonMaster.reviveItems;
-        pokemiltonMaster.POKEBALLS = dataGame.PokemiltonMaster.POKEBALLS;
+        const pokemiltonMasterData = dataGame.PokemiltonMaster;
+        pokemiltonMaster = new PokemiltonMaster(pokemiltonMasterData);
 
         world.saved_on = dataGame.saved_on;
         world.day = dataGame.day;
@@ -196,7 +192,7 @@ async function run(pokemiltonMaster) {
         pokemiltonMaster.showCollection();
         break;
       case "6":
-        pokemiltonMaster.checkStatus();
+        pokemiltonMaster.checkStatus(pokemiltonMaster);
         break;
       case "7":
         console.log("La journée passe...\n");
