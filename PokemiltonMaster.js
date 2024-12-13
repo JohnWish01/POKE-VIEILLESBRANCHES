@@ -1,7 +1,7 @@
 const { log } = require("console");
 const Pokemilton = require("./Pokemilton");
 const Game = require("./Game");
-
+const locale = require("./locales/fr.json");
 class PokemiltonMaster {
   constructor({
     name,
@@ -17,6 +17,31 @@ class PokemiltonMaster {
     this.healingItems = healingItems || 5; //Initial number of healing items
     this.reviveItems = reviveItems || 3; //Initial number of revive items
     this.POKEBALLS = POKEBALLS || 10; //Initial number of POKEBALLS
+  }
+
+  // Getter for the name
+  get getName() {
+    return this.name;
+  }
+
+  // Getter for the pokemiltonCollection
+  get getPokemiltonCollection() {
+    return this.pokemiltonCollection;
+  }
+
+  // Getter for healingItems
+  get getHealingItems() {
+    return this.healingItems;
+  }
+
+  // Getter for reviveItems
+  get getReviveItems() {
+    return this.reviveItems;
+  }
+
+  // Getter for POKEBALLS
+  get getPokeballs() {
+    return this.POKEBALLS;
   }
 
   // Implémenger la fonction pour renommer un pokemon de la collection.
@@ -38,12 +63,15 @@ class PokemiltonMaster {
     } else {
       console.log("\nPokemilton introuvable dans votre collection !");
     }
+    return this.pokemiltonCollection[answer];
   }
 
   // Implémenter le soin.
   healPokemilton(pokemilton) {
-    if (this.healingItems > 0) {
-      pokemilton.healthPool = pokemilton.getRandomNumber(10, 30);
+    if (pokemilton === undefined) {
+      console.log("\n" + locale.noSelection);
+    } else if (this.healingItems > 0) {
+      pokemilton.healthPool = Math.floor(pokemilton.getRandomNumber(10, 30));
       this.healingItems -= 1;
       console.log(
         `\n${pokemilton.name} a été soigné ! Il reste : ${this.healingItems}`
@@ -55,7 +83,9 @@ class PokemiltonMaster {
 
   // Implémenter le revive.
   revivePokemilton(pokemilton) {
-    if (this.reviveItems > 0) {
+    if (pokemilton === undefined) {
+      console.log("\n" + locale.noSelection);
+    } else if (this.reviveItems > 0) {
       pokemilton.healthPool = Math.floor(
         pokemilton.getRandomNumber(10, 30) / 2
       );
@@ -84,17 +114,23 @@ class PokemiltonMaster {
   }
   // Méthode 2 pour vérifier le statut du pokemilton.
   checkStatus(pokemilton) {
-    // Vérification du statut du pokemilton, comme sa santé et son expérience.
-    const status = {
-      name: pokemilton.name,
-      experienceMeter: pokemilton.experienceMeter,
-      healthPool: pokemilton.healthPool,
-    };
-    // Affichage du statut dans la console.
-    console.log(
-      `${status.name}, ${status.experienceMeter}, ${status.healthPool}`
-    );
+    if (pokemilton === undefined) {
+      console.log(locale.noSelection);
+    } else {
+      // Vérification du statut du pokemilton, comme sa santé et son expérience.
+      const status = {
+        name: pokemilton.name,
+        experienceMeter: pokemilton.experienceMeter,
+        healthPool: pokemilton.healthPool,
+        level: pokemilton.level,
+      };
+      // Affichage du statut dans la console.
+      console.log(
+        `\n${status.name} - Niveau: ${status.level}, Expérience: ${status.experienceMeter}, Santé: ${status.healthPool}`
+      );
+    }
   }
+
   checkMaster() {
     const checkin = {
       healingItems: this.healingItems,
@@ -111,10 +147,14 @@ class PokemiltonMaster {
     } else {
       console.log("\nVotre collection de Pokemilton :");
 
-      let i=0
+      let i = 0;
       this.pokemiltonCollection.forEach((pokemilton) => {
         console.log(
-          `${i+1} - ${pokemilton.name}, Niveau: ${pokemilton.level}, Expérience: ${pokemilton.experienceMeter}, Santé: ${pokemilton.healthPool}`
+          `${i + 1} - ${pokemilton.name}, Niveau: ${
+            pokemilton.level
+          }, Expérience: ${pokemilton.experienceMeter}, Santé: ${
+            pokemilton.healthPool
+          }`
         );
       });
     }
