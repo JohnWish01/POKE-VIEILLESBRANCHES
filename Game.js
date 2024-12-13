@@ -19,7 +19,7 @@ let dataGame = []; // les données du jeu
 let pokemiltonMaster; // le maître du jeu
 let world = new PokemiltonWorld(); // Initialisation de l'environnement de jeu
 let nameNeeded = true; //Doit-on demander le nom du master ?
-
+let currentPokemilton;
 function askQuestion(question) {
   return new Promise((resolve) => {
     rl.question(question, resolve);
@@ -127,7 +127,7 @@ async function proposeFirstPokemilton() {
   }
 
   while (true) {
-    let answer = await askQuestion("Choose your first Pokemilton (1-3):");
+    let answer = await askQuestion("\nChoose your first Pokemilton (1-3):");
     switch (answer) {
       case "1":
         selectedPokemilton = pokemiltonsArr[0];
@@ -167,7 +167,7 @@ const menuDay =
   "6. Vérifier l'état\n" +
   "7. Vérifier votre état\n" +
   "8. Ne rien faire (Passer la journée)\n" +
-  "Votre choix: ";
+  "\nVotre choix: ";
 
 async function run(pokemiltonMaster) {
   while (true) {
@@ -189,13 +189,15 @@ async function run(pokemiltonMaster) {
         );
         break;
       case "4":
-        await pokemiltonMaster.renamePokemilton(askQuestion); // Ajout paramètre askQuestion.
+        currentPokemilton = await pokemiltonMaster.renamePokemilton(
+          askQuestion
+        ); // Ajout paramètre askQuestion.
         break;
       case "5":
         pokemiltonMaster.showCollection();
         break;
       case "6":
-        pokemiltonMaster.checkStatus(Pokemilton);
+        pokemiltonMaster.checkStatus(currentPokemilton);
         break;
       case "7":
         pokemiltonMaster.checkMaster();
@@ -216,7 +218,7 @@ async function run(pokemiltonMaster) {
 async function startGame() {
   try {
     await loadGameState(); // Charge les données depuis le fichier JSON
-    console.log("JSON file processed successfully.\n");
+    //console.log("JSON file processed successfully.\n");
     if (nameNeeded) {
       await askForName();
       await proposeFirstPokemilton();

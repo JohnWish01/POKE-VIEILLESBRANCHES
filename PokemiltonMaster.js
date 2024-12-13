@@ -63,6 +63,7 @@ class PokemiltonMaster {
     } else {
       console.log("\nPokemilton introuvable dans votre collection !");
     }
+    return this.pokemiltonCollection[answer];
   }
 
   // Implémenter le soin.
@@ -114,10 +115,11 @@ class PokemiltonMaster {
       name: pokemilton.name,
       experienceMeter: pokemilton.experienceMeter,
       healthPool: pokemilton.healthPool,
+      level: pokemilton.level,
     };
     // Affichage du statut dans la console.
     console.log(
-      `${status.name}, ${status.experienceMeter}, ${status.healthPool}`
+      `\n${status.name} - Niveau: ${status.level}, Expérience: ${status.experienceMeter}, Santé: ${status.healthPool}`
     );
   }
   checkMaster() {
@@ -136,10 +138,14 @@ class PokemiltonMaster {
     } else {
       console.log("\nVotre collection de Pokemilton :");
 
-      let i=0
+      let i = 0;
       this.pokemiltonCollection.forEach((pokemilton) => {
         console.log(
-          `${i+1} - ${pokemilton.name}, Niveau: ${pokemilton.level}, Expérience: ${pokemilton.experienceMeter}, Santé: ${pokemilton.healthPool}`
+          `${i + 1} - ${pokemilton.name}, Niveau: ${
+            pokemilton.level
+          }, Expérience: ${pokemilton.experienceMeter}, Santé: ${
+            pokemilton.healthPool
+          }`
         );
       });
     }
