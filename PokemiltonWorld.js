@@ -12,16 +12,16 @@ class PokemiltonWorld {
     this.logs = [];
   }
 
-  oneDayPasses(menuDay) {
+  oneDayPasses(menuDay, askQuestion) {
     //this.day++;
-    this.randomizeEvent(menuDay);
+    this.randomizeEvent(menuDay, askQuestion);
   }
 
-  async randomizeEvent(menuDay) {
+  async randomizeEvent(menuDay, askQuestion) {
     let num = Math.floor(Math.random()) * 2;
     if (num === 0) {
       pokemiltonArena = new PokemiltonArena();
-      await pokemiltonArena.startBattle(menuDay);
+      await pokemiltonArena.startBattle(menuDay, askQuestion);
     } else {
       msg = '\nNothing happened for this day."';
       console.log(msg);

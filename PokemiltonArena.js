@@ -15,9 +15,9 @@ class PokemiltonArena {
     // });
   }
 
-  async startBattle(menuDay) {
+  async startBattle(menuDay, askQuestion) {
     console.log("Un Pokemilton sauvage apparaît !\n");
-    await this.askQuestion(
+    await askQuestion(
       "Que voulez-vous faire ?\n1. Combattre\n2. Fuir\n",
       (choice) => {
         switch (choice) {
@@ -35,10 +35,6 @@ class PokemiltonArena {
         }
       }
     );
-  }
-
-  askQuestion(question, callback) {
-    this.rl.question(question, callback);
   }
 
   choosePokemilton(pokemiltonMaster) {

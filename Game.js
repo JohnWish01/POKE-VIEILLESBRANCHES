@@ -20,6 +20,7 @@ let pokemiltonMaster; // le maître du jeu
 let world = new PokemiltonWorld(); // Initialisation de l'environnement de jeu
 let nameNeeded = true; //Doit-on demander le nom du master ?
 let currentPokemilton;
+
 function askQuestion(question) {
   return new Promise((resolve) => {
     rl.question(question, resolve);
@@ -78,7 +79,7 @@ async function loadGameState() {
         dataGame = JSON.parse(jsonString);
 
         const pokemiltonMasterData = dataGame.PokemiltonMaster;
-        pokemiltonMaster = new PokemiltonMaster(pokemiltonMasterData);
+        pokemiltonMaster = new PokemiltonMaster(pokemiltonMasterData);      
 
         // @ts-ignore
         world.saved_on = dataGame.saved_on;
@@ -105,9 +106,7 @@ async function loadGameState() {
 async function askForName() {
   let name = await askQuestion(locale.questionMasterName);
   pokemiltonMaster = new PokemiltonMaster({ name });
-  console.log(
-    "\n" + locale.hello + pokemiltonMaster.name + locale.helloNext + "\n"
-  );
+  console.log("\n" + locale.hello + pokemiltonMaster.name + locale.helloNext + "\n");
 }
 
 // Choix entre 3 Pokemilton
@@ -117,13 +116,8 @@ async function proposeFirstPokemilton() {
 
   for (let i = 0; i < 3; i++) {
     pokemiltonsArr[i] = new Pokemilton();
-    let { name, level, attackRange, defenseRange, healthPool } =
-      pokemiltonsArr[i];
-    console.log(
-      `${
-        i + 1
-      }- ${name} - Level: ${level} - Stats: Attack range ${attackRange}, Defense range ${defenseRange}, Health pool ${healthPool}`
-    );
+    let { name, level, attackRange, defenseRange, healthPool } = pokemiltonsArr[i];
+    console.log(`${i + 1}- ${name} - Level: ${level} - Stats: Attack range ${attackRange}, Defense range ${defenseRange}, Health pool ${healthPool}`);
   }
 
   while (true) {
@@ -148,9 +142,7 @@ async function proposeFirstPokemilton() {
 
   // Attribution du Pokemilton sélectionné au Master
   pokemiltonMaster.pokemiltonCollection.push(selectedPokemilton);
-  console.log(
-    `\n${selectedPokemilton.name} has been added to your collection\n`
-  );
+  console.log(`\n${selectedPokemilton.name} has been added to your collection\n`);
 
   // Sauvegarde des données après le choix du premier Pokemilton
   saveGameState(pokemiltonMaster, world);
@@ -169,15 +161,13 @@ async function menuDay(pokemiltonMaster) {
         pokemiltonMaster.revivePokemilton(currentPokemilton);
         break;
       case "3":
-        pokemiltonMaster.releasePokemilton();
+        await pokemiltonMaster.releasePokemilton(askQuestion, pokemiltonMaster);
         break;
       case "4":
-        currentPokemilton = await pokemiltonMaster.renamePokemilton(
-          askQuestion
-        ); // Ajout paramètre askQuestion.
+        currentPokemilton = await pokemiltonMaster.renamePokemilton(askQuestion, pokemiltonMaster); // Ajout paramètre askQuestion.
         break;
       case "5":
-        pokemiltonMaster.showCollection();
+        pokemiltonMaster.showCollection(pokemiltonMaster);
         break;
       case "6":
         pokemiltonMaster.checkStatus(currentPokemilton);
@@ -186,7 +176,7 @@ async function menuDay(pokemiltonMaster) {
         pokemiltonMaster.checkMaster();
         break;
       case "8":
-        world.oneDayPasses(menuDay);
+        world.oneDayPasses(menuDay, askQuestion);
         //console.log("La journée passe...\n");
         //rl.close();
         return; // Quitte la fonction une fois la journée terminée

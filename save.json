@@ -1,29 +1,20 @@
 {
-  "saved_on": "2024-12-13T10:52:14.145Z",
+  "saved_on": "2024-12-13T15:08:51.469Z",
   "PokemiltonMaster": {
-    "name": "1",
+    "name": "Manu",
     "pokemiltonCollection": [
       {
-        "name": "diolas",
+        "name": "Titi",
         "level": 1,
         "experienceMeter": 0,
-        "attackRange": 6,
-        "defenseRange": 3,
-        "healthPool": 19,
+        "attackRange": 7,
+        "defenseRange": 1,
+        "healthPool": 20,
         "catchPhrase": "I choose you!"
-      },
-      {
-        "name": "PiouPiou",
-        "level": 2,
-        "experienceMeter": 0,
-        "attackRange": 5,
-        "defenseRange": 2,
-        "healthPool": 12,
-        "catchPhrase": "Boom!"
       }
     ],
-    "healingItems": 5,
-    "reviveItems": 3,
+    "healingItems": 2,
+    "reviveItems": 1,
     "POKEBALLS": 10
   },
   "day": 1,

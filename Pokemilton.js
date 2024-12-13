@@ -66,14 +66,14 @@ const students = [
 //Le constructor initialise l'objet Pokemilton avec plusieurs choses :
 // - Un nom random, un niveau, des stats(attaque, défense, santé) et la catch phrase.
 class Pokemilton {
-  constructor() {
-    this.name = this.generateRandomName();
-    this.level = 1;
-    this.experienceMeter = 0;
-    this.attackRange = this.getRandomNumber(1, 8);
-    this.defenseRange = this.getRandomNumber(1, 3);
-    this.healthPool = this.getRandomNumber(10, 30);
-    this.catchPhrase = this.generateCatchPhrase();
+  constructor(name, level, experienceMeter, attackRange, defenseRange, healthPool, catchPhrase) {
+    this.name = name || this.generateRandomName();
+    this.level = level || 1;
+    this.experienceMeter = experienceMeter || 0;
+    this.attackRange = attackRange || this.getRandomNumber(1, 8);
+    this.defenseRange = defenseRange || this.getRandomNumber(1, 3);
+    this.healthPool = healthPool || this.getRandomNumber(10, 30);
+    this.catchPhrase = catchPhrase || this.generateCatchPhrase();
   }
 
   // Retourne les infos d'un Pokemilton
@@ -83,10 +83,8 @@ class Pokemilton {
 
   // Crée des nom de pokemons en combinant 2 étudiants (strings) avec la méthode random
   generateRandomName() {
-    const randomStudent1 =
-      students[Math.floor(Math.random() * students.length)];
-    const randomStudent2 =
-      students[Math.floor(Math.random() * students.length)];
+    const randomStudent1 = students[Math.floor(Math.random() * students.length)];
+    const randomStudent2 = students[Math.floor(Math.random() * students.length)];
     return `${randomStudent1}${randomStudent2}`;
   }
   // Génère un nombre aléatoire entre min & max.
@@ -96,24 +94,16 @@ class Pokemilton {
 
   //Génère la catch phrase parmis les 3 options.
   generateCatchPhrase() {
-    const phrases = [
-      "I choose you!",
-      "Let the battle begin!",
-      "Pokemilton, go!",
-    ];
+    const phrases = ["I choose you!", "Let the battle begin!", "Pokemilton, go!"];
     return phrases[Math.floor(Math.random() * phrases.length)];
   }
 
   // Permet à un pokemon d'en attaquer un autre, calcul aussi les dégats
   //en fonction de son niveau d'ATK et du niveau de DEF de l'adversaire.
   attack(defender) {
-    const damage =
-      this.getRandomNumber(this.attackRange * this.level, this.attackRange) -
-      defender.defenseRange;
+    const damage = this.getRandomNumber(this.attackRange * this.level, this.attackRange) - defender.defenseRange;
     defender.healthPool -= damage;
-    console.log(
-      `${this.name} attacked ${defender.name} and dealt ${damage} damage!`
-    );
+    console.log(`${this.name} attacked ${defender.name} and dealt ${damage} damage!`);
   }
 
   //Gain d'expérience après un combat et évolution si suffisamment d'EXP.
@@ -137,9 +127,7 @@ class Pokemilton {
     this.defenseRange += defenseIncrease;
     this.healthPool += healthIncrease;
 
-    console.log(
-      `${this.name} evolved into a higher level! New stats: Level ${this.level}, Attack Range ${this.attackRange}, Defense Range ${this.defenseRange}, Health Pool ${this.healthPool}`
-    );
+    console.log(`${this.name} evolved into a higher level! New stats: Level ${this.level}, Attack Range ${this.attackRange}, Defense Range ${this.defenseRange}, Health Pool ${this.healthPool}`);
   }
 
   // Dis la catchphrase.
