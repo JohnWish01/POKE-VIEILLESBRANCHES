@@ -1,3 +1,8 @@
+const Game = require("./Game");
+const PokemiltonArena = require("./PokemiltonArena");
+const PokemiltonMaster = require("./PokemiltonMaster");
+const PokemiltonWorld = require("./PokemiltonWorld");
+
 // Tableau avec des morceaux de noms utilisés pour générer les noms de pokémons.
 const students = [
   "Ale",
@@ -138,7 +143,7 @@ class Pokemilton {
   }
 
   // Dis la catchphrase.
-  sayCatchPhrase() {
+  sayCatchPhrase(pokemiltonArena) {
     console.log(`${this.name} says: "${this.catchPhrase}"`);
   }
 }
