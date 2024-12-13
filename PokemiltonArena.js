@@ -14,9 +14,9 @@ class PokemiltonArena {
     });
   }
 
-  startBattle() {
+  async startBattle(menuDay) {
     console.log("Un Pokemilton sauvage apparaît !\n");
-    this.askQuestion(
+    await this.askQuestion(
       "Que voulez-vous faire ?\n1. Combattre\n2. Fuir\n",
       (choice) => {
         switch (choice) {
@@ -25,10 +25,11 @@ class PokemiltonArena {
             break;
           case "2":
             console.log("Vous avez évincé le combat...");
+            menuDay();
             break;
           default:
             console.log("Choix invalide.");
-            this.startBattle();
+            this.startBattle(menuDay);
             break;
         }
       }
@@ -64,7 +65,7 @@ class PokemiltonArena {
     this.playerAction(pokemilton);
   }
 
-  playerAction(selectedPokemilton) {
+  async playerAction(selectedPokemilton) {
     this.askQuestion(
       "Que voulez-vous faire ?\n1. Attaquer\n2.Utiliser un objet\n3. Attraper\n4. Fuir",
       (action) => {
@@ -74,7 +75,7 @@ class PokemiltonArena {
             break;
           case "2":
             console.log("Objet"); //Creer un moyen d'utiliser un menu choix des objets.
-            this.startRound(pokemilton);
+            this.UseObject(pokemilton);
             break;
           case "3":
             this.tryToCatch();

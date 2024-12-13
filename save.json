@@ -1,15 +1,15 @@
 {
-  "saved_on": "2024-12-13T08:33:02.469Z",
+  "saved_on": "2024-12-13T10:52:14.145Z",
   "PokemiltonMaster": {
-    "name": "k",
+    "name": "1",
     "pokemiltonCollection": [
       {
-        "name": "Ouioui",
+        "name": "diolas",
         "level": 1,
         "experienceMeter": 0,
-        "attackRange": 7,
-        "defenseRange": 1,
-        "healthPool": 28,
+        "attackRange": 6,
+        "defenseRange": 3,
+        "healthPool": 19,
         "catchPhrase": "I choose you!"
       }
     ],
