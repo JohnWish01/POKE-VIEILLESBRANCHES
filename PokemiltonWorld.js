@@ -1,7 +1,6 @@
 const PokemiltonArena = require("./PokemiltonArena");
 const Pokemilton = require("./Pokemilton");
 const Game = require("./Game");
-const fs = require("fs");
 
 let pokemiltonArena;
 let msg = "";
@@ -14,7 +13,7 @@ class PokemiltonWorld {
   }
 
   oneDayPasses(menuDay) {
-    this.day++;
+    //this.day++;
     this.randomizeEvent(menuDay);
   }
 

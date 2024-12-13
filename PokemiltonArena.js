@@ -1,4 +1,5 @@
-const readline = require("readline");
+const Game = require("./Game");
+
 let battleInProgress = 0;
 let currentPokemilton;
 
@@ -8,10 +9,10 @@ class PokemiltonArena {
     this.pokemilton_2 = pokemilton_2;
     this.roundNumber = 0;
 
-    this.rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
+    // this.rl = readline.createInterface({
+    //   input: process.stdin,
+    //   output: process.stdout,
+    // });
   }
 
   async startBattle(menuDay) {
