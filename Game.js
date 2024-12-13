@@ -27,7 +27,7 @@ function askQuestion(question) {
 }
 
 // Fonction pour sauvegarder l'état du jeu dans un fichier JSON
-function saveGameState(pokemiltonMaster, world) {
+function saveGameState(pokemiltonMaster, world, menuDay) {
   try {
     const saveData = {
       saved_on: new Date().toISOString(),
