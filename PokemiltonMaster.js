@@ -1,7 +1,7 @@
 const { log } = require("console");
 const Pokemilton = require("./Pokemilton");
 const Game = require("./Game");
-
+const locale = require("./locales/fr.json");
 class PokemiltonMaster {
   constructor({
     name,
@@ -68,8 +68,10 @@ class PokemiltonMaster {
 
   // Implémenter le soin.
   healPokemilton(pokemilton) {
-    if (this.healingItems > 0) {
-      pokemilton.healthPool = pokemilton.getRandomNumber(10, 30);
+    if (pokemilton === undefined) {
+      console.log("\n" + locale.noSelection);
+    } else if (this.healingItems > 0) {
+      pokemilton.healthPool = Math.floor(pokemilton.getRandomNumber(10, 30));
       this.healingItems -= 1;
       console.log(
         `\n${pokemilton.name} a été soigné ! Il reste : ${this.healingItems}`
@@ -81,7 +83,9 @@ class PokemiltonMaster {
 
   // Implémenter le revive.
   revivePokemilton(pokemilton) {
-    if (this.reviveItems > 0) {
+    if (pokemilton === undefined) {
+      console.log("\n" + locale.noSelection);
+    } else if (this.reviveItems > 0) {
       pokemilton.healthPool = Math.floor(
         pokemilton.getRandomNumber(10, 30) / 2
       );
@@ -110,18 +114,23 @@ class PokemiltonMaster {
   }
   // Méthode 2 pour vérifier le statut du pokemilton.
   checkStatus(pokemilton) {
-    // Vérification du statut du pokemilton, comme sa santé et son expérience.
-    const status = {
-      name: pokemilton.name,
-      experienceMeter: pokemilton.experienceMeter,
-      healthPool: pokemilton.healthPool,
-      level: pokemilton.level,
-    };
-    // Affichage du statut dans la console.
-    console.log(
-      `\n${status.name} - Niveau: ${status.level}, Expérience: ${status.experienceMeter}, Santé: ${status.healthPool}`
-    );
+    if (pokemilton === undefined) {
+      console.log(locale.noSelection);
+    } else {
+      // Vérification du statut du pokemilton, comme sa santé et son expérience.
+      const status = {
+        name: pokemilton.name,
+        experienceMeter: pokemilton.experienceMeter,
+        healthPool: pokemilton.healthPool,
+        level: pokemilton.level,
+      };
+      // Affichage du statut dans la console.
+      console.log(
+        `\n${status.name} - Niveau: ${status.level}, Expérience: ${status.experienceMeter}, Santé: ${status.healthPool}`
+      );
+    }
   }
+
   checkMaster() {
     const checkin = {
       healingItems: this.healingItems,

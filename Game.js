@@ -27,7 +27,7 @@ function askQuestion(question) {
 }
 
 // Fonction pour sauvegarder l'état du jeu dans un fichier JSON
-function saveGameState(pokemiltonMaster, world) {
+function saveGameState(pokemiltonMaster, world, menuDay) {
   try {
     const saveData = {
       saved_on: new Date().toISOString(),
@@ -157,36 +157,19 @@ async function proposeFirstPokemilton() {
 }
 
 // Menu de la journée
-const menuDay =
-  "Que voulez-vous faire :\n" +
-  "1. Soigner votre Pokemilton\n" +
-  "2. Ressusciter votre Pokemilton\n" +
-  "3. Relâcher un Pokemilton\n" +
-  "4. Renommer un Pokemilton de votre collection\n" +
-  "5. Voir la collection\n" +
-  "6. Vérifier l'état\n" +
-  "7. Vérifier votre état\n" +
-  "8. Ne rien faire (Passer la journée)\n" +
-  "\nVotre choix: ";
 
-async function run(pokemiltonMaster) {
+async function menuDay(pokemiltonMaster) {
   while (true) {
-    let answer = await askQuestion(menuDay);
+    let answer = await askQuestion("\n" + locale.menuDay);
     switch (answer) {
       case "1":
-        pokemiltonMaster.healPokemilton(
-          pokemiltonMaster.pokemiltonCollection[0]
-        );
+        pokemiltonMaster.healPokemilton(currentPokemilton);
         break;
       case "2":
-        pokemiltonMaster.revivePokemilton(
-          pokemiltonMaster.pokemiltonCollection[0]
-        );
+        pokemiltonMaster.revivePokemilton(currentPokemilton);
         break;
       case "3":
-        pokemiltonMaster.releasePokemilton(
-          pokemiltonMaster.pokemiltonCollection[0]
-        );
+        pokemiltonMaster.releasePokemilton();
         break;
       case "4":
         currentPokemilton = await pokemiltonMaster.renamePokemilton(
@@ -203,8 +186,9 @@ async function run(pokemiltonMaster) {
         pokemiltonMaster.checkMaster();
         break;
       case "8":
-        console.log("La journée passe...\n");
-        rl.close();
+        world.oneDayPasses(menuDay);
+        //console.log("La journée passe...\n");
+        //rl.close();
         return; // Quitte la fonction une fois la journée terminée
       default:
         console.log("Choix incorrect. Essayez de nouveau.\n");
@@ -223,7 +207,7 @@ async function startGame() {
       await askForName();
       await proposeFirstPokemilton();
     }
-    await run(pokemiltonMaster); // Lancer la boucle du menu principal
+    await menuDay(pokemiltonMaster); // Lancer la boucle du menu principal
   } catch (error) {
     console.error("Error while processing JSON file:", error);
   }

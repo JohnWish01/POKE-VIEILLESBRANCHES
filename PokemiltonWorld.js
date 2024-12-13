@@ -13,22 +13,22 @@ class PokemiltonWorld {
     this.logs = [];
   }
 
-  oneDayPasses() {
+  oneDayPasses(menuDay) {
     this.day++;
-    //this.randomizeEvent();
+    this.randomizeEvent(menuDay);
   }
 
-  randomizeEvent() {
-    let num = Math.floor(Math.random() + 1);
+  async randomizeEvent(menuDay) {
+    let num = Math.floor(Math.random()) * 2;
     if (num === 0) {
       pokemiltonArena = new PokemiltonArena();
-      pokemiltonArena.startBattle();
+      await pokemiltonArena.startBattle(menuDay);
     } else {
-      msg = 'Nothing happened for this day."';
+      msg = '\nNothing happened for this day."';
       console.log(msg);
       this.addLog(msg);
-      this.oneDayPasses(); //on passe à une nouvelle journée
-      Game.menuDay(); //on affiche le menu
+      //this.oneDayPasses(); //on passe à une nouvelle journée
+      await menuDay(); //on affiche le menu
     }
   }
 

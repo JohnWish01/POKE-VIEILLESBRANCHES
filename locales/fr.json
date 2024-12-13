@@ -9,5 +9,7 @@
   "jsonKo": "Fichier corrompu. Réinitialisation du jeu :",
   "questionMasterName": "Quel est votre nom ? :",
   "hello": "Bonjour Master ",
-  "helloNext": ", votre aventure commence!"
+  "helloNext": ", votre aventure commence!",
+  "noSelection": "Aucun Pokemilton sélectionné",
+  "menuDay": "Que voulez-vous faire :\n1. Soigner votre Pokemilton\n2. Ressusciter votre Pokemilton\n3. Relâcher un Pokemilton\n4. Renommer un Pokemilton de votre collection\n5. Voir la collection\n6. Vérifier l'état\n7. Vérifier votre état\n8. Ne rien faire (Passer la journée)\n\nVotre choix: "
 }
