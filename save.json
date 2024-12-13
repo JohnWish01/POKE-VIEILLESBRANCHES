@@ -11,6 +11,15 @@
         "defenseRange": 1,
         "healthPool": 28,
         "catchPhrase": "I choose you!"
+      },
+      {
+        "name": "PiouPiou",
+        "level": 2,
+        "experienceMeter": 0,
+        "attackRange": 5,
+        "defenseRange": 2,
+        "healthPool": 12,
+        "catchPhrase": "Boom!"
       }
     ],
     "healingItems": 5,
