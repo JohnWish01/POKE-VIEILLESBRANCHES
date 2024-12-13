@@ -44,29 +44,11 @@ class PokemiltonMaster {
     return this.POKEBALLS;
   }
 
-<<<<<<< HEAD
-  askQuestion(question) {
-    return new Promise((resolve) => {
-      rl.question(question, resolve);
-    });
-  }
-
-=======
->>>>>>> d6dc22be230bdfe8227a4d4307cd7ee27ea1fd51
   // Implémenger la fonction pour renommer un pokemon de la collection.
   async renamePokemilton(askQuestion) {
     const nbrPoke = this.pokemiltonCollection.length;
     this.showCollection();
-<<<<<<< HEAD
-    let answer = await askQuestion("Quel Pokemilton voulez-vous renommer ? :");
-    answer = parseInt(answer-1);
-    if (answer >= 0 && answer < nbrPoke) {
-      const oldName = this.pokemiltonCollection[answer].name;
-      const answer2 = await askQuestion("Entrez son nouveau nom :");
-
-      this.pokemiltonCollection[answer].name = answer2.trim();
-=======
-    let answer = await askQuestion("Quel Pokemilton voulez-vous renommer ? ");
+    let answer = await askQuestion("\nQuel Pokemilton voulez-vous renommer ? ");
     answer = parseInt(answer) - 1;
     if (answer >= 0 && answer < nbrPoke) {
       let answer2 = await askQuestion("Entrez son nouveau nom.. ");
@@ -77,7 +59,6 @@ class PokemiltonMaster {
       // Update du nom
       this.pokemiltonCollection[answer].name = answer2.trim();
       let oldName = this.pokemiltonCollection[answer].name;
->>>>>>> d6dc22be230bdfe8227a4d4307cd7ee27ea1fd51
       console.log(`\n${oldName} a été renommé ${answer2}!`);
     } else {
       console.log("\nPokemilton introuvable dans votre collection !");

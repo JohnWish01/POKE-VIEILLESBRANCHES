@@ -189,7 +189,7 @@ async function run(pokemiltonMaster) {
         );
         break;
       case "4":
-        pokemiltonMaster.renamePokemilton(askQuestion); // Ajout paramètre askQuestion.
+        await pokemiltonMaster.renamePokemilton(askQuestion); // Ajout paramètre askQuestion.
         break;
       case "5":
         pokemiltonMaster.showCollection();
