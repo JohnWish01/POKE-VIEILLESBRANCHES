@@ -76,6 +76,7 @@ class Pokemilton {
     this.defenseRange = defenseRange || this.getRandomNumber(1, 3);
     this.healthPool = healthPool || this.getRandomNumber(10, 30);
     this.catchPhrase = catchPhrase || this.generateCatchPhrase();
+    this.healthPoolGeneration = this.healthPool;
   }
 
   // Retourne les infos d'un Pokemilton

@@ -21,10 +21,12 @@ class PokemiltonArena {
         case "1":
           this.pokemilton_2 = new Pokemilton();
           healthWild = this.pokemilton_2.healthPool; //Sauvegarde pour le calcul du % de chance de l'attraper
-          console.log(`\nVoici les caractéristiques du Pokemilton sauvage :\n- Niveau : ${this.pokemilton_2.level}\n- Nom : ${this.pokemilton_2.name} \n- Santé : ${this.pokemilton_2.healthPool}`);
+          console.clear();
+          console.log(`\nVoici les caractéristiques du Pokemilton sauvage :\n- Nom : ${this.pokemilton_2.name}\n- Niveau : ${this.pokemilton_2.level}\n- Santé : ${this.pokemilton_2.healthPool}\n- Défense : ${this.pokemilton_2.defenseRange}\n- Attaque : ${this.pokemilton_2.attackRange}`);
           await this.choosePokemilton(pokemiltonMaster, askQuestion, menuDay);
           return;
         case "2":
+          console.clear();
           console.log("\nVous avez évincé le combat...");
           goAway = true;
           await menuDay(pokemiltonMaster);
@@ -43,8 +45,10 @@ class PokemiltonArena {
 
     if (answer > 0 && answer <= pokemiltonMaster.pokemiltonCollection.length) {
       this.pokemilton_1 = pokemiltonMaster.pokemiltonCollection[answer - 1];
+      console.clear();
       await this.startRound(askQuestion, menuDay, pokemiltonMaster);
     } else {
+      console.clear();
       console.log("\nChoix invalide. Veuillez sélectionner un Pokemilton valide.");
       await this.choosePokemilton(pokemiltonMaster, askQuestion, menuDay);
     }
@@ -67,11 +71,13 @@ class PokemiltonArena {
         this.tryToCatch(pokemiltonMaster);
         break;
       case "3":
-        console.log("\nVous fuyez le combat !");
+        console.clear();
+        console.log("\nVous avez fuit le combat !");
         goAway = true;
-        await menuDay(pokemiltonMaster);
+        //await menuDay(pokemiltonMaster);
         break;
       default:
+        console.clear();
         console.log("\nChoix invalide. Réessayez.\n");
         await this.playerAction(askQuestion, menuDay, pokemiltonMaster);
     }
@@ -90,7 +96,7 @@ class PokemiltonArena {
     } else {
       this.pokemilton_2.healthPool -= damage;
     }
-
+    console.clear();
     console.log(`\n${this.pokemilton_1.name} attaque ${this.pokemilton_2.name} et inflige ${damage} point(s) de dégât(s) !`);
     console.log(`Nom: ${this.pokemilton_2.name} - Niveau: ${this.pokemilton_2.level} - Expérience: ${this.pokemilton_2.experienceMeter} - Attaque: ${this.pokemilton_2.attackRange} - Défense: ${this.pokemilton_2.defenseRange} - Santé: ${this.pokemilton_2.healthPool}`);
 
@@ -102,16 +108,19 @@ class PokemiltonArena {
     if (pokemiltonMaster.pokemiltonCollection.length < pokemiltonMaster.POKEBALLS) {
       const luck = 100 - (this.pokemilton_2.healthPool / healthWild) * 100;
       if (catchChance <= luck) {
+        console.clear();
         console.log("\nFélicitations ! Vous avez attrapé le Pokemilton sauvage !");
         pokemiltonMaster.pokemiltonCollection.push(this.pokemilton_2);
         console.log("Et il a été ajouté à votre collection.");
         goAway = true;
       } else {
+        console.clear();
         console.log("\nLa capture a échoué !");
         goAway = false;
         return;
       }
     } else {
+      console.clear();
       console.log("\n Votre collection est pleine !");
     }
   }

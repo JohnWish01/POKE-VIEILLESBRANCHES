@@ -14,6 +14,7 @@ class PokemiltonWorld {
 
   oneDayPasses(menuDay, askQuestion, pokemiltonMaster) {
     this.day++;
+    console.clear();
     console.log(`\nJournée ${this.day}`);
     saveGameState(pokemiltonMaster, this)
     this.randomizeEvent(menuDay, askQuestion, pokemiltonMaster);

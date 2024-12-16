@@ -19,7 +19,6 @@ let dataGame = []; // les données du jeu
 let pokemiltonMaster; // le maître du jeu
 let world = new PokemiltonWorld(); // Initialisation de l'environnement de jeu
 let nameNeeded = true; //Doit-on demander le nom du master ?
-let currentPokemilton;
 
 function askQuestion(question) {
   return new Promise((resolve) => {
@@ -85,9 +84,7 @@ async function loadGameState() {
 async function askForName() {
   let name = await askQuestion("\n" + locale.questionMasterName);
   pokemiltonMaster = new PokemiltonMaster({ name });
-  console.log(
-    "\n" + locale.hello + pokemiltonMaster.name + locale.helloNext + "\n"
-  );
+  console.log("\n" + locale.hello + pokemiltonMaster.name + locale.helloNext + "\n");
   world.addLog(locale.hello + pokemiltonMaster.name + locale.helloNext);
 }
 
@@ -98,13 +95,8 @@ async function proposeFirstPokemilton() {
 
   for (let i = 0; i < 3; i++) {
     pokemiltonsArr[i] = new Pokemilton();
-    let { name, level, attackRange, defenseRange, healthPool } =
-      pokemiltonsArr[i];
-    console.log(
-      `${
-        i + 1
-      }- ${name} - Level: ${level} - Stats: Attack range ${attackRange}, Defense range ${defenseRange}, Health pool ${healthPool}`
-    );
+    let { name, level, attackRange, defenseRange, healthPool } = pokemiltonsArr[i];
+    console.log(`${i + 1}- ${name} - Level: ${level} - Stats: Attack range ${attackRange}, Defense range ${defenseRange}, Health pool ${healthPool}`);
   }
 
   while (true) {
@@ -130,7 +122,7 @@ async function proposeFirstPokemilton() {
   // Attribution du Pokemilton sélectionné au Master
   pokemiltonMaster.pokemiltonCollection.push(selectedPokemilton);
   currentPokemilton = selectedPokemilton;
-  console.log(`\n${selectedPokemilton.name}` + locale.addPokemiltonOk + "\n");
+  console.log(`\n${selectedPokemilton.name}` + locale.addPokemiltonOk);
   world.addLog(`${selectedPokemilton.name}` + locale.addPokemiltonOk);
   // Sauvegarde des données après le choix du premier Pokemilton
   saveGameState(pokemiltonMaster, world);
@@ -151,12 +143,10 @@ async function menuDay(pokemiltonMaster) {
         await pokemiltonMaster.releasePokemilton(askQuestion, pokemiltonMaster);
         break;
       case "4":
-        currentPokemilton = await pokemiltonMaster.renamePokemilton(
-          askQuestion,
-          pokemiltonMaster
-        ); // Ajout paramètre askQuestion.
+        await pokemiltonMaster.renamePokemilton(askQuestion, pokemiltonMaster);
         break;
       case "5":
+        console.clear();
         pokemiltonMaster.showCollection();
         break;
       case "6":
@@ -166,6 +156,7 @@ async function menuDay(pokemiltonMaster) {
         await world.oneDayPasses(menuDay, askQuestion, pokemiltonMaster);
         return; // Quitte la fonction une fois la journée terminée
       case "8": // Option de sortie propre
+        console.clear();
         console.log("\n" + locale.goodbye + "\n");
         endBonus();
         rl.close();
@@ -225,4 +216,4 @@ function endBonus() {
   console.log("⠀⠀⠀⠉⠉⠀⠀⠈⠉⠉⠉⠙⠻⠿⠾⠾⠻⠓⢷⠶⡶⡿⠿⠛⠛⠓⠒⠒⡟⠛⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
 }
 
-module.exports = { startGame, currentPokemilton };
+module.exports = { startGame};
