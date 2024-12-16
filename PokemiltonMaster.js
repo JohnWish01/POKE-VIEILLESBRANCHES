@@ -25,7 +25,8 @@ class PokemiltonMaster {
       let newName = await askQuestion("Entrez son nouveau nom : ");
 
       if (newName.trim().length > 0) {
-        this.pokemiltonCollection[index].name = newName.trim();
+        newName = newName.trim().charAt(0).toUpperCase() + newName.trim().slice(1);
+        this.pokemiltonCollection[index].name = newName;
         console.log(`\n${oldName} a été renommé ${newName} !`);
       } else {
         console.log("\nNom invalide, le Pokemilton n'a pas été renommé.");

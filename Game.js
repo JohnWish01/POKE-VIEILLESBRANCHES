@@ -8,6 +8,8 @@ const PokemiltonWorld = require("./PokemiltonWorld");
 const fs = require("fs"); // Pour gérer le système de fichiers
 const path = require("path");
 const {saveGameState} = require('./Shared');
+const status = "";
+
 
 // Création d'une interface pour lire et écrire dans la console
 const rl = readline.createInterface({

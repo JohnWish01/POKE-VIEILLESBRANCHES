@@ -1,7 +1,7 @@
 //Shared.js
 
 const locale = require("./locales/fr.json");
-const fs = require("fs"); // Pour gérer le système de fichiers
+const fs = require("fs"); // Pour gérer le système de fichiers run
 
 // Fonction pour sauvegarder l'état du jeu dans un fichier JSON
 function saveGameState(pokemiltonMaster, world) {
@@ -19,7 +19,7 @@ function saveGameState(pokemiltonMaster, world) {
       logs: world.logs,
     };
     fs.writeFileSync("save.json", JSON.stringify(saveData, null, 2));
-    console.log("\n", locale.saveOk);
+    //console.log("\n", locale.saveOk);
   } catch (error) {
     console.error("\n", locale.saveKo, error);
   }

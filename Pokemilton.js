@@ -80,13 +80,15 @@ class Pokemilton {
 
   // Retourne les infos d'un Pokemilton
   getStats() {
-    return `Name:${this.name} Level:${this.level} - Experience:${this.experienceMeter} - Attack: ${this.attackRange} - Defense: ${this.defenseRange} - Health: ${this.healthPool}`;
+    return `Name: ${this.name} - Level: ${this.level} - Experience: ${this.experienceMeter} - Attack: ${this.attackRange} - Defense: ${this.defenseRange} - Health: ${this.healthPool}`;
   }
 
   // Crée des nom de pokemons en combinant 2 étudiants (strings) avec la méthode random
   generateRandomName() {
-    const randomStudent1 = students[Math.floor(Math.random() * students.length)];
-    const randomStudent2 = students[Math.floor(Math.random() * students.length)];
+    let randomStudent1 = students[Math.floor(Math.random() * students.length)];
+    randomStudent1 = randomStudent1.charAt(0).toUpperCase() + randomStudent1.slice(1);
+    let randomStudent2 = students[Math.floor(Math.random() * students.length)];
+    randomStudent2 = randomStudent2.charAt(0).toUpperCase() + randomStudent2.slice(1);
     return `${randomStudent1}${randomStudent2}`;
   }
   // Génère un nombre aléatoire entre min & max.
