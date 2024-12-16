@@ -37,42 +37,51 @@ class PokemiltonMaster {
   }
 
   // Implémenter le soin.
-  healPokemilton(pokemilton) {
-    if (!pokemilton) {
-      console.log("\n" + locale.noSelection);
-      return;
-    }
-
+  async healPokemilton(askQuestion) {
     if (this.healingItems > 0) {
-      const healedAmount = pokemilton.getRandomNumber(10, 30);
-      //NORMALEMENT IL FAUT AUGMENTER LA VALEUR JUSQU'A NE PAS DEPASSER SA VALEUR D'ORIGINE
-      pokemilton.healthPool = healedAmount;
-      this.healingItems -= 1;
-      console.log(`\n${pokemilton.name} a récupéré ${healedAmount} points de santé ! Potions restantes : ${this.healingItems}`);
+      this.showCollection();
+      const answer = await askQuestion("Quel Pokemilton voulez-vous soigner ? : ");
+
+      let index = parseInt(answer) - 1;
+      if (index >= 0 && index <= this.pokemiltonCollection.length) {
+        const pokemiltonTemp = new Pokemilton();
+        const healedAmount = pokemiltonTemp.getRandomNumber(10, 30);
+        this.pokemiltonCollection[index].healthPool = healedAmount;
+
+        this.healingItems -= 1;
+        console.log(`\n${this.pokemiltonCollection[index].name} a récupéré ${healedAmount} points de santé ! Potions restantes : ${this.healingItems}`);
+      } else {
+        console.log("\nChoix invalide");
+        return;
+      }
     } else {
       console.log("\nVous n'avez plus d'objet de soin!");
     }
   }
 
   // Implémenter le revive.
-  revivePokemilton(pokemilton) {
-    if (!pokemilton) {
-      console.log("\n" + locale.noSelection);
-      return;
-    }
-
+  async revivePokemilton(askQuestion) {
     if (this.reviveItems > 0) {
-      //VERIFIER LE RESULTAT RETOURNE AVEC LE /2
-      const reviveAmount = Math.floor(pokemilton.getRandomNumber(10, 30) / 2);
-      pokemilton.healthPool = Math.max(pokemilton.healthPool, reviveAmount); //On prend la plus grande des 2 valeurs
-      this.reviveItems -= 1;
-      console.log(`\n${pokemilton.name} a été ressuscité avec ${reviveAmount} points de santé ! Potions revive restantes : ${this.reviveItems}`);
+      this.showCollection();
+      const answer = await askQuestion("Quel Pokemilton voulez-vous ressusciter ? : ");
+
+      let index = parseInt(answer) - 1;
+      if (index >= 0 && index <= this.pokemiltonCollection.length) {
+        const pokemiltonTemp = new Pokemilton();
+        const reviveAmount = Math.floor(pokemiltonTemp.getRandomNumber(10, 30) / 2);
+        this.pokemiltonCollection[index].healthPool = Math.max(this.pokemiltonCollection[index].healthPool, reviveAmount); //On prend la plus grande des 2 valeurs
+        this.reviveItems -= 1;
+        console.log(`\n${this.pokemiltonCollection[index].name} a été ressuscité avec ${reviveAmount} points de santé ! Potions revive restantes : ${this.reviveItems}`);
+      } else {
+        console.log("\nChoix invalide");
+        return;
+      }
     } else {
-      console.log("\nVous n'avez plus de potions Revive !");
+      console.log("\nVous n'avez plus de potions de résurection !");
     }
   }
 
-  // Relacher un pokemon.
+  // Relacher un Pokémilton.
   async releasePokemilton(askQuestion, pokemiltonMaster) {
     if (this.pokemiltonCollection.length === 1) {
       console.log("\nVous ne pouvez pas vous séparer de votre unique Pokemilton !");
@@ -121,7 +130,6 @@ class PokemiltonMaster {
       console.log(`- Niveau : ${pokemilton.level}`);
       console.log(`- Expérience : ${pokemilton.experienceMeter}`);
       console.log(`- Santé : ${pokemilton.healthPool}\n`);
-
     });
   }
 }

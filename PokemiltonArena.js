@@ -15,7 +15,7 @@ class PokemiltonArena {
   }
 
   async startBattle(menuDay, askQuestion, pokemiltonMaster) {
-    goAway = false; 
+    goAway = false;
     console.log("\nUn Pokemilton sauvage apparaît !\n");
     while (true) {
       const answer = await askQuestion("Que voulez-vous faire ?\n1. Combattre\n2. Fuir\n\nVotre choix: ");
@@ -44,7 +44,7 @@ class PokemiltonArena {
 
     if (answer > 0 && answer <= pokemiltonMaster.pokemiltonCollection.length) {
       this.pokemilton_1 = pokemiltonMaster.pokemiltonCollection[answer - 1];
-      currentPokemilton = this.pokemilton_1;
+      //currentPokemilton = this.pokemilton_1;
       await this.startRound(askQuestion, menuDay, pokemiltonMaster);
     } else {
       console.log("\nChoix invalide. Veuillez sélectionner un Pokemilton valide.");
@@ -71,7 +71,7 @@ class PokemiltonArena {
         this.UseObject();
         break;
       case "3":
-        this.tryToCatch(askQuestion, menuDay, pokemiltonMaster);
+        this.tryToCatch(menuDay,pokemiltonMaster);
         break;
       case "4":
         console.log("\nVous fuyez le combat !");
@@ -84,7 +84,7 @@ class PokemiltonArena {
         await this.playerAction(askQuestion, menuDay, pokemiltonMaster);
     }
 
-    if (this.pokemilton_2.healthPool > 0 && goAway === false) {
+    if (this.pokemilton2 && this.pokemilton_2.healthPool > 0 && goAway === false) {
       this.wildPokemiltonAction(askQuestion, menuDay, pokemiltonMaster);
     } else {
       this.endBattle(menuDay, pokemiltonMaster);
@@ -93,19 +93,35 @@ class PokemiltonArena {
 
   attack() {
     const damage = this.calculateDamage(this.pokemilton_1.attackRange, this.pokemilton_2.defenseRange);
-    this.pokemilton_2.healthPool -= damage;
+    if (this.pokemilton_2.healthPool - damage <= 0) {
+      this.pokemilton_2.healthPool = 0;
+    } else {
+      this.pokemilton_2.healthPool -= damage;
+    }
+
     console.log(`\n${this.pokemilton_1.name} attaque ${this.pokemilton_2.name} et inflige ${damage} points de dégâts !`);
     console.log(`Nom: ${this.pokemilton_2.name} - Niveau: ${this.pokemilton_2.level} - Expérience: ${this.pokemilton_2.experienceMeter} - Attaque: ${this.pokemilton_2.attackRange} - Défense: ${this.pokemilton_2.defenseRange} - Santé: ${this.pokemilton_2.healthPool}`);
 
     this.checkBattleStatus();
   }
 
-  tryToCatch(askQuestion, menuDay, pokemiltonMaster) {
+  tryToCatch(menuDay, pokemiltonMaster) {
     const catchChance = Math.random();
-    if (catchChance < 0.5) {
-      console.log("\nFélicitations ! Vous avez attrapé le Pokemilton sauvage !");
+    if (pokemiltonMaster.pokemiltonCollection.length < pokemiltonMaster.POKEBALLS) {
+      if (catchChance < 0.5) {
+        console.log("\nFélicitations ! Vous avez attrapé le Pokemilton sauvage !");
+        pokemiltonMaster.pokemiltonCollection.push(this.pokemilton_2);
+        console.log("Et il a été ajouté dans votre collection.");
+        goAway = true;
+        this.endBattle(menuDay, pokemiltonMaster);
+      } else {
+        console.log("\nLe Pokemilton sauvage s'est échappé !");
+        goAway = true;
+        this.endBattle(menuDay, pokemiltonMaster);
+        return;
+      }
     } else {
-      console.log("\nLe Pokemilton sauvage s'est échappé !");
+      console.log("\n Votre collection est pleine !");
     }
   }
 
@@ -115,7 +131,11 @@ class PokemiltonArena {
 
   wildPokemiltonAction(askQuestion, menuDay, pokemiltonMaster) {
     const damage = this.calculateDamage(this.pokemilton_2.attackRange, this.pokemilton_1.defenseRange);
-    this.pokemilton_1.healthPool -= damage;
+    if (this.pokemilton_1.healthPool - damage <= 0) {
+      this.pokemilton_1.healthPool = 0;
+    } else {
+      this.pokemilton_1.healthPool -= damage;
+    }
 
     console.log(`\n${this.pokemilton_2.name} contre-attaque et inflige ${damage} points de dégâts à ${this.pokemilton_1.name} !`);
     console.log(`Nom: ${this.pokemilton_1.name} - Niveau: ${this.pokemilton_1.level} - Expérience: ${this.pokemilton_1.experienceMeter} - Attaque: ${this.pokemilton_1.attackRange} - Défense: ${this.pokemilton_1.defenseRange} - Santé: ${this.pokemilton_1.healthPool}`);
@@ -124,7 +144,7 @@ class PokemiltonArena {
       console.log(`${this.pokemilton_1.name} a été vaincu !`);
       this.endBattle(menuDay, pokemiltonMaster);
     } else {
-      this.startRound(askQuestion, menuDay,pokemiltonMaster); //On passe au round suivant.
+      this.startRound(askQuestion, menuDay, pokemiltonMaster); //On passe au round suivant.
     }
   }
 

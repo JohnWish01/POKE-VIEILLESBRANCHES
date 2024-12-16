@@ -7,9 +7,8 @@ const Pokemilton = require("./Pokemilton");
 const PokemiltonWorld = require("./PokemiltonWorld");
 const fs = require("fs"); // Pour gérer le système de fichiers
 const path = require("path");
-const {saveGameState} = require('./Shared');
+const { saveGameState } = require("./Shared");
 const status = "";
-
 
 // Création d'une interface pour lire et écrire dans la console
 const rl = readline.createInterface({
@@ -88,7 +87,9 @@ async function loadGameState() {
 async function askForName() {
   let name = await askQuestion("\n" + locale.questionMasterName);
   pokemiltonMaster = new PokemiltonMaster({ name });
-  console.log("\n" + locale.hello + pokemiltonMaster.name + locale.helloNext + "\n");
+  console.log(
+    "\n" + locale.hello + pokemiltonMaster.name + locale.helloNext + "\n"
+  );
   world.addLog(locale.hello + pokemiltonMaster.name + locale.helloNext);
 }
 
@@ -99,8 +100,13 @@ async function proposeFirstPokemilton() {
 
   for (let i = 0; i < 3; i++) {
     pokemiltonsArr[i] = new Pokemilton();
-    let { name, level, attackRange, defenseRange, healthPool } = pokemiltonsArr[i];
-    console.log(`${i + 1}- ${name} - Level: ${level} - Stats: Attack range ${attackRange}, Defense range ${defenseRange}, Health pool ${healthPool}`);
+    let { name, level, attackRange, defenseRange, healthPool } =
+      pokemiltonsArr[i];
+    console.log(
+      `${
+        i + 1
+      }- ${name} - Level: ${level} - Stats: Attack range ${attackRange}, Defense range ${defenseRange}, Health pool ${healthPool}`
+    );
   }
 
   while (true) {
@@ -125,7 +131,7 @@ async function proposeFirstPokemilton() {
 
   // Attribution du Pokemilton sélectionné au Master
   pokemiltonMaster.pokemiltonCollection.push(selectedPokemilton);
-  currentPokemilton = selectedPokemilton 
+  currentPokemilton = selectedPokemilton;
   console.log(`\n${selectedPokemilton.name}` + locale.addPokemiltonOk + "\n");
   world.addLog(`${selectedPokemilton.name}` + locale.addPokemiltonOk);
   // Sauvegarde des données après le choix du premier Pokemilton
@@ -138,30 +144,30 @@ async function menuDay(pokemiltonMaster) {
     let answer = await askQuestion("\n" + locale.menuDay);
     switch (answer.trim()) {
       case "1":
-        pokemiltonMaster.healPokemilton(currentPokemilton);
+        await pokemiltonMaster.healPokemilton(askQuestion);
         break;
       case "2":
-        pokemiltonMaster.revivePokemilton(currentPokemilton);
+        await pokemiltonMaster.revivePokemilton(askQuestion);
         break;
       case "3":
         await pokemiltonMaster.releasePokemilton(askQuestion, pokemiltonMaster);
         break;
       case "4":
-        currentPokemilton = await pokemiltonMaster.renamePokemilton(askQuestion, pokemiltonMaster); // Ajout paramètre askQuestion.
+        currentPokemilton = await pokemiltonMaster.renamePokemilton(
+          askQuestion,
+          pokemiltonMaster
+        ); // Ajout paramètre askQuestion.
         break;
       case "5":
         pokemiltonMaster.showCollection();
         break;
       case "6":
-        pokemiltonMaster.checkStatus(currentPokemilton);
-        break;
-      case "7":
         pokemiltonMaster.checkMaster();
         break;
-      case "8":
+      case "7":
         await world.oneDayPasses(menuDay, askQuestion, pokemiltonMaster);
         return; // Quitte la fonction une fois la journée terminée
-      case "9": // Option de sortie propre
+      case "8": // Option de sortie propre
         console.log("\n" + locale.goodbye + "\n");
         rl.close();
         process.exit(0);
