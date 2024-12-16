@@ -1,6 +1,8 @@
+//PokemiltonMaster.js
+
 const { log } = require("console");
 const Pokemilton = require("./Pokemilton");
-const Game = require("./Game");
+//const Game = require("./Game");
 const locale = require("./locales/fr.json");
 
 class PokemiltonMaster {
@@ -13,20 +15,21 @@ class PokemiltonMaster {
   }
 
   // Implémenger la fonction pour renommer un pokemon de la collection.
-  async renamePokemilton(askQuestion, pokemiltonMaster) {
-    const nbrPoke = pokemiltonMaster.pokemiltonCollection.length;
-    this.showCollection(pokemiltonMaster);
+  async renamePokemilton(askQuestion) {
+    this.showCollection();
     let answer = await askQuestion("\nQuel Pokemilton voulez-vous renommer ? ");
-    answer = parseInt(answer) - 1;
+    let index = parseInt(answer) - 1;
 
-    if (answer >= 0 && answer < nbrPoke) {
-      let oldName = pokemiltonMaster.pokemiltonCollection[answer].name;
-      let answer2 = await askQuestion("Entrez son nouveau nom.. ");
+    if (index >= 0 && index < this.pokemiltonCollection.length) {
+      let oldName = this.pokemiltonCollection[index].name;
+      let newName = await askQuestion("Entrez son nouveau nom : ");
 
-      // Update du nom
-      pokemiltonMaster.pokemiltonCollection[answer].name = answer2.trim();
-      console.log(`\n${oldName} a été renommé ${answer2}!`);
-      return pokemiltonMaster.pokemiltonCollection[answer];
+      if (newName.trim().length > 0) {
+        this.pokemiltonCollection[index].name = newName.trim();
+        console.log(`\n${oldName} a été renommé ${newName} !`);
+      } else {
+        console.log("\nNom invalide, le Pokemilton n'a pas été renommé.");
+      }
     } else {
       console.log("\nPokemilton introuvable dans votre collection !");
     }
@@ -34,12 +37,17 @@ class PokemiltonMaster {
 
   // Implémenter le soin.
   healPokemilton(pokemilton) {
-    if (pokemilton === undefined) {
+    if (!pokemilton) {
       console.log("\n" + locale.noSelection);
-    } else if (this.healingItems > 0) {
-      pokemilton.healthPool = Math.floor(pokemilton.getRandomNumber(10, 30));
+      return;
+    }
+
+    if (this.healingItems > 0) {
+      const healedAmount = pokemilton.getRandomNumber(10, 30);
+      //NORMALEMENT IL FAUT AUGMENTER LA VALEUR JUSQU'A NE PAS DEPASSER SA VALEUR D'ORIGINE
+      pokemilton.healthPool = healedAmount;
       this.healingItems -= 1;
-      console.log(`\n${pokemilton.name} a été soigné ! Il reste : ${this.healingItems}`);
+      console.log(`\n${pokemilton.name} a récupéré ${healedAmount} points de santé ! Potions restantes : ${this.healingItems}`);
     } else {
       console.log("\nVous n'avez plus d'objet de soin!");
     }
@@ -47,72 +55,72 @@ class PokemiltonMaster {
 
   // Implémenter le revive.
   revivePokemilton(pokemilton) {
-    if (pokemilton === undefined) {
+    if (!pokemilton) {
       console.log("\n" + locale.noSelection);
-    } else if (this.reviveItems > 0) {
-      pokemilton.healthPool = Math.floor(pokemilton.getRandomNumber(10, 30) / 2);
+      return;
+    }
+
+    if (this.reviveItems > 0) {
+      //VERIFIER LE RESULTAT RETOURNE AVEC LE /2
+      const reviveAmount = Math.floor(pokemilton.getRandomNumber(10, 30) / 2);
+      pokemilton.healthPool = Math.max(pokemilton.healthPool, reviveAmount); //On prend la plus grande des 2 valeurs
       this.reviveItems -= 1;
-      console.log(`\n${pokemilton.name} a été ressuscité ! Il reste : ${this.reviveItems}`);
+      console.log(`\n${pokemilton.name} a été ressuscité avec ${reviveAmount} points de santé ! Potions revive restantes : ${this.reviveItems}`);
     } else {
-      console.log("\nVous n'avez plus cet objet !");
+      console.log("\nVous n'avez plus de potions Revive !");
     }
   }
 
   // Relacher un pokemon.
   async releasePokemilton(askQuestion, pokemiltonMaster) {
     if (this.pokemiltonCollection.length === 1) {
-      console.log("\nVous ne pouvez pas vous séparer de votre unique Pokemilton !\n");
-    } else {
-      this.showCollection(pokemiltonMaster);
-      let answer = await askQuestion("\nQuel Pokemilton voulez-vous libérer ? :");
-      const index = pokemiltonMaster.pokemiltonCollection.indexOf(pokemiltonMaster.pokemiltonCollection[answer - 1]);
-      if (index !== -1) {
-        const deletedPokemiltonName = pokemiltonMaster.pokemiltonCollection[answer - 1].name;
-        pokemiltonMaster.pokemiltonCollection.splice(index, 1);
-        console.log(`\n${deletedPokemiltonName} a été relaché de votre collection !\n`);
-      } else {
-        console.log("\nCe Pokemilton n'existe pas dans votre collection !\n");
-      }
+      console.log("\nVous ne pouvez pas vous séparer de votre unique Pokemilton !");
+      return;
     }
+
+    this.showCollection();
+    const answer = await askQuestion("\nQuel Pokemilton voulez-vous libérer ? :");
+    const index = parseInt(answer, 10) - 1;
+
+    if (isNaN(index) || index < 0 || index >= this.pokemiltonCollection.length1) {
+      console.log("\nrChoix invalide. Aucune action n'a été effectuée.");
+      return;
+    }
+
+    const releasedPokemilton = this.pokemiltonCollection.splice(index, 1)[0];
+    console.log(`\n${releasedPokemilton.name} a été relaché de votre collection !`);
   }
 
   // Méthode 2 pour vérifier le statut du pokemilton.
   checkStatus(pokemilton) {
-    if (pokemilton === undefined) {
-      console.log(locale.noSelection);
-    } else {
-      // Vérification du statut du pokemilton, comme sa santé et son expérience.
-      const status = {
-        name: pokemilton.name,
-        experienceMeter: pokemilton.experienceMeter,
-        healthPool: pokemilton.healthPool,
-        level: pokemilton.level,
-      };
-      // Affichage du statut dans la console.
-      console.log(`\n${status.name} - Niveau: ${status.level}, Expérience: ${status.experienceMeter}, Santé: ${status.healthPool}`);
+    if (!pokemilton) {
+      console.log("\n" + locale.noSelection);
+      return;
     }
+    // Affichage du statut dans la console.
+    console.log(`\nStatus de ${pokemilton.name} :`);
+    console.log(`- Niveau: ${pokemilton.level}, \nExpérience: ${pokemilton.experienceMeter}, \nSanté: ${pokemilton.healthPool}`);
   }
 
   checkMaster() {
-    const checkin = {
-      healingItems: this.healingItems,
-      reviveItems: this.reviveItems,
-    };
-    console.log(`\nVotre état :\nIl vous reste : ${checkin.healingItems} potion(s) de soin, et ${checkin.reviveItems} potion(s) Revive.\n`);
+    console.log(`\nInventaire de ${this.name} : `);
+    console.log(`- Objets de guérison : ${this.healingItems} \n- Objets de vie : ${this.reviveItems}`);
   }
 
   // Montrer la collection
-  showCollection(pokemiltonMaster) {
+  showCollection() {
     if (this.pokemiltonCollection.length === 0) {
       console.log("\nVotre collection est vide !");
-    } else {
-      console.log("\nVotre collection de Pokemilton :");
-
-      let i = 0;
-      pokemiltonMaster.pokemiltonCollection.forEach((pokemilton) => {
-        console.log(`${++i} - ${pokemilton.name}, Niveau: ${pokemilton.level}, Expérience: ${pokemilton.experienceMeter}, Santé: ${pokemilton.healthPool}`);
-      });
+      return;
     }
+
+    console.log("\nVotre collection de Pokemilton :");
+    this.pokemiltonCollection.forEach((pokemilton, index) => {
+      console.log(`${index + 1} - ${pokemilton.name}`);
+      console.log(`- Niveau : ${pokemilton.level}`);
+      console.log(`- Expérience : ${pokemilton.experienceMeter}`);
+      console.log(`- Santé : ${pokemilton.healthPool}`);
+    });
   }
 }
 module.exports = PokemiltonMaster;

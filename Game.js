@@ -1,13 +1,13 @@
-// @ts-nocheck
+//Game.js
+
 const locale = require("./locales/fr.json");
 const readline = require("readline"); // Pour interagir avec l'utilisateur via la console
 const PokemiltonMaster = require("./PokemiltonMaster"); // Remplacez par le bon fichier
 const Pokemilton = require("./Pokemilton");
 const PokemiltonWorld = require("./PokemiltonWorld");
-const PokemiltonArena = require("./PokemiltonArena");
 const fs = require("fs"); // Pour gérer le système de fichiers
 const path = require("path");
-const Game = require("./Game");
+const {saveGameState} = require('./Shared');
 
 // Création d'une interface pour lire et écrire dans la console
 const rl = readline.createInterface({
@@ -27,28 +27,6 @@ function askQuestion(question) {
   });
 }
 
-// Fonction pour sauvegarder l'état du jeu dans un fichier JSON
-function saveGameState(pokemiltonMaster, world, menuDay) {
-  try {
-    const saveData = {
-      saved_on: new Date().toISOString(),
-      PokemiltonMaster: {
-        name: pokemiltonMaster.name,
-        pokemiltonCollection: pokemiltonMaster.pokemiltonCollection,
-        healingItems: pokemiltonMaster.healingItems,
-        reviveItems: pokemiltonMaster.reviveItems,
-        POKEBALLS: pokemiltonMaster.POKEBALLS,
-      },
-      day: world.day,
-      logs: world.logs,
-    };
-    fs.writeFileSync("save.json", JSON.stringify(saveData, null, 2));
-    console.log("\n", locale.saveOk, "\n");
-  } catch (error) {
-    console.error("\n", locale.saveKo, error, "\n");
-  }
-}
-
 // Fonction pour charger les données du jeu à partir d'un fichier JSON
 async function loadGameState() {
   const filePath = path.resolve("save.json"); // Résolution du chemin du fichier
@@ -60,6 +38,8 @@ async function loadGameState() {
     console.log("\n", locale.jsonNotFound, "\n");
     // Création d'un fichier JSON vide si il n'existe pas
     fs.writeFileSync(filePath, JSON.stringify(initialData, null, 4), "utf8");
+    nameNeeded = true;
+    return;
   }
 
   try {
@@ -79,7 +59,7 @@ async function loadGameState() {
         dataGame = JSON.parse(jsonString);
 
         const pokemiltonMasterData = dataGame.PokemiltonMaster;
-        pokemiltonMaster = new PokemiltonMaster(pokemiltonMasterData);      
+        pokemiltonMaster = new PokemiltonMaster(pokemiltonMasterData);
 
         // @ts-ignore
         world.saved_on = dataGame.saved_on;
@@ -87,9 +67,9 @@ async function loadGameState() {
         world.logs = dataGame.logs;
 
         nameNeeded = false; //le nom du master ne doit pas être renseigné, il a été chargé
-        console.log("\n", locale.dataLoaded, "\n");
+        console.log("\n", locale.dataLoaded);
       } else {
-        console.log("\n", locale.newGame, "\n");
+        console.log("\n", locale.newGame);
         // Démarre une nouvelle partie si l'utilisateur refuse
         nameNeeded = true;
         world = new PokemiltonWorld();
@@ -107,6 +87,7 @@ async function askForName() {
   let name = await askQuestion(locale.questionMasterName);
   pokemiltonMaster = new PokemiltonMaster({ name });
   console.log("\n" + locale.hello + pokemiltonMaster.name + locale.helloNext + "\n");
+  world.addLog(locale.hello + pokemiltonMaster.name + locale.helloNext);
 }
 
 // Choix entre 3 Pokemilton
@@ -142,18 +123,18 @@ async function proposeFirstPokemilton() {
 
   // Attribution du Pokemilton sélectionné au Master
   pokemiltonMaster.pokemiltonCollection.push(selectedPokemilton);
-  console.log(`\n${selectedPokemilton.name} has been added to your collection\n`);
-
+  currentPokemilton = selectedPokemilton 
+  console.log(`\n${selectedPokemilton.name}` + locale.addPokemiltonOk + "\n");
+  world.addLog(`${selectedPokemilton.name}` + locale.addPokemiltonOk);
   // Sauvegarde des données après le choix du premier Pokemilton
   saveGameState(pokemiltonMaster, world);
 }
 
 // Menu de la journée
-
 async function menuDay(pokemiltonMaster) {
   while (true) {
     let answer = await askQuestion("\n" + locale.menuDay);
-    switch (answer) {
+    switch (answer.trim()) {
       case "1":
         pokemiltonMaster.healPokemilton(currentPokemilton);
         break;
@@ -167,7 +148,7 @@ async function menuDay(pokemiltonMaster) {
         currentPokemilton = await pokemiltonMaster.renamePokemilton(askQuestion, pokemiltonMaster); // Ajout paramètre askQuestion.
         break;
       case "5":
-        pokemiltonMaster.showCollection(pokemiltonMaster);
+        pokemiltonMaster.showCollection();
         break;
       case "6":
         pokemiltonMaster.checkStatus(currentPokemilton);
@@ -176,16 +157,17 @@ async function menuDay(pokemiltonMaster) {
         pokemiltonMaster.checkMaster();
         break;
       case "8":
-        world.oneDayPasses(menuDay, askQuestion);
-        //console.log("La journée passe...\n");
-        //rl.close();
+        await world.oneDayPasses(menuDay, askQuestion, pokemiltonMaster);
         return; // Quitte la fonction une fois la journée terminée
+      case "9": // Option de sortie propre
+        console.log("\n" + locale.goodbye + "\n");
+        rl.close();
+        process.exit(0);
       default:
-        console.log("Choix incorrect. Essayez de nouveau.\n");
-        continue; // Redemande une réponse valide si l'utilisateur fait un choix invalide
+        console.log(locale.invalidChoice);
+        continue;
     }
     saveGameState(pokemiltonMaster, world);
-    //break; // Sort de la boucle si un choix valide est fait (A DECOMMENTER)
   }
 }
 
@@ -203,6 +185,4 @@ async function startGame() {
   }
 }
 
-startGame();
-
-module.exports = Game;
+module.exports = { startGame, currentPokemilton };

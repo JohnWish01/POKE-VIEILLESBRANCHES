@@ -1,9 +1,9 @@
 {
-  "saveOk": "État du jeu sauvegardé.",
+  "saveOk": "Etat du jeu sauvegardé.",
   "saveKo": "Erreur rencontrée pendant la sauvegarde:",
   "jsonNotFound": "Fichier JSON non trouvé => création du fichier.",
   "jsonEmpty": "Le fichier JSON est vide => initialisation du jeu.",
-  "questionLoadData": "Des données existent, voulez-vous charger la partie ? (oui/non)",
+  "questionLoadData": "Des données existent, voulez-vous charger la partie (oui/non) ? : ",
   "dataLoaded": "Les données du jeu sont chargées.",
   "newGame": "Démarrage d'une nouvelle partie.",
   "jsonKo": "Fichier corrompu. Réinitialisation du jeu :",
@@ -11,5 +11,9 @@
   "hello": "Bonjour Master ",
   "helloNext": ", votre aventure commence!",
   "noSelection": "Aucun Pokemilton sélectionné",
-  "menuDay": "Que voulez-vous faire :\n1. Soigner votre Pokemilton\n2. Ressusciter votre Pokemilton\n3. Relâcher un Pokemilton\n4. Renommer un Pokemilton de votre collection\n5. Voir la collection\n6. Vérifier l'état\n7. Vérifier votre état\n8. Ne rien faire (Passer la journée)\n\nVotre choix: "
+  "menuDay": "Que voulez-vous faire:\n1. Soigner votre Pokemilton\n2. Ressusciter votre Pokemilton\n3. Relâcher un Pokemilton\n4. Renommer un Pokemilton de votre collection\n5. Voir la collection\n6. Vérifier l'état\n7. Vérifier votre état\n8. Ne rien faire\n9. Quitter\n\nVotre choix: ",
+  "addPokemiltonOk": "a été ajouté à votre collection",
+  "dayWord": "Jour",
+  "invalidChoice": "Choix invalide.",
+  "goodbye": "Au revoir !"
 }

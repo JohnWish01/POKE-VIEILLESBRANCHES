@@ -1,7 +1,9 @@
+//Pokemilton.js
+
 const Game = require("./Game");
-const PokemiltonArena = require("./PokemiltonArena");
-const PokemiltonMaster = require("./PokemiltonMaster");
-const PokemiltonWorld = require("./PokemiltonWorld");
+// const PokemiltonArena = require("./PokemiltonArena");
+// const PokemiltonMaster = require("./PokemiltonMaster");
+// const PokemiltonWorld = require("./PokemiltonWorld");
 
 // Tableau avec des morceaux de noms utilisés pour générer les noms de pokémons.
 const students = [
@@ -89,6 +91,7 @@ class Pokemilton {
   }
   // Génère un nombre aléatoire entre min & max.
   getRandomNumber(min, max) {
+    if (min > max) [min, max] = [max, min]; // inversion si min > max
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
@@ -101,7 +104,10 @@ class Pokemilton {
   // Permet à un pokemon d'en attaquer un autre, calcul aussi les dégats
   //en fonction de son niveau d'ATK et du niveau de DEF de l'adversaire.
   attack(defender) {
-    const damage = this.getRandomNumber(this.attackRange * this.level, this.attackRange) - defender.defenseRange;
+    if (!defender || !(defender instanceof Pokemilton)) {
+      console.log("Erreur : le défenseur n'est pas un Pokemilton valide !");
+    }
+    const damage = Math.max(0, this.getRandomNumber(this.attackRange * this.level, this.attackRange) - defender.defenseRange);
     defender.healthPool -= damage;
     console.log(`${this.name} attacked ${defender.name} and dealt ${damage} damage!`);
   }
@@ -110,7 +116,7 @@ class Pokemilton {
   gainExperience(opponentLevel) {
     const experienceGain = this.getRandomNumber(1, 5) * opponentLevel;
     this.experienceMeter += experienceGain;
-    console.log(`${this.name} gained ${experienceGain} experience points!`);
+    console.log(`\n${this.name} a reçu ${experienceGain} de points d'expérience!`);
     if (this.experienceMeter >= this.level * 100) {
       this.evolve();
     }
@@ -127,7 +133,11 @@ class Pokemilton {
     this.defenseRange += defenseIncrease;
     this.healthPool += healthIncrease;
 
-    console.log(`${this.name} evolved into a higher level! New stats: Level ${this.level}, Attack Range ${this.attackRange}, Defense Range ${this.defenseRange}, Health Pool ${this.healthPool}`);
+    console.log(`${this.name} a évolué au niveau ${this.level}!
+      Nouvelles stats:
+      - Attack Range ${this.attackRange}
+      - Defense Range ${this.defenseRange}
+      - Health Pool ${this.healthPool}`);
   }
 
   // Dis la catchphrase.

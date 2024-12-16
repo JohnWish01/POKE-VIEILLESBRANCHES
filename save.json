@@ -1,22 +1,55 @@
 {
-  "saved_on": "2024-12-13T15:08:51.469Z",
+  "saved_on": "2024-12-15T23:14:17.053Z",
   "PokemiltonMaster": {
     "name": "Manu",
     "pokemiltonCollection": [
       {
-        "name": "Titi",
+        "name": "Flash",
         "level": 1,
         "experienceMeter": 0,
-        "attackRange": 7,
-        "defenseRange": 1,
-        "healthPool": 20,
-        "catchPhrase": "I choose you!"
+        "attackRange": 5,
+        "defenseRange": 3,
+        "healthPool": 28,
+        "catchPhrase": "Pokemilton, go!"
       }
     ],
-    "healingItems": 2,
-    "reviveItems": 1,
+    "healingItems": 5,
+    "reviveItems": 3,
     "POKEBALLS": 10
   },
-  "day": 1,
-  "logs": []
+  "day": 56,
+  "logs": [
+    "Jour 1 - Bonjour Master Manu, votre aventure commence!",
+    "Jour 1 - Guiliea été ajouté à votre collection",
+    "Jour 2 - Rien ne s'est passé pendant cette journée...",
+    "Jour 6 - Rien ne s'est passé pendant cette journée...",
+    "Jour 7 - Rien ne s'est passé pendant cette journée...",
+    "Jour 8 - Rien ne s'est passé pendant cette journée...",
+    "Jour 11 - Rien ne s'est passé pendant cette journée...",
+    "Jour 17 - Rien ne s'est passé pendant cette journée...",
+    "Jour 21 - Rien ne s'est passé pendant cette journée...",
+    "Jour 23 - Rien ne s'est passé pendant cette journée...",
+    "Jour 24 - Rien ne s'est passé pendant cette journée...",
+    "Jour 25 - Rien ne s'est passé pendant cette journée...",
+    "Jour 26 - Rien ne s'est passé pendant cette journée...",
+    "Jour 27 - Rien ne s'est passé pendant cette journée...",
+    "Jour 28 - Rien ne s'est passé pendant cette journée...",
+    "Jour 30 - Rien ne s'est passé pendant cette journée...",
+    "Jour 31 - Rien ne s'est passé pendant cette journée...",
+    "Jour 33 - Rien ne s'est passé pendant cette journée...",
+    "Jour 34 - Rien ne s'est passé pendant cette journée...",
+    "Jour 35 - Rien ne s'est passé pendant cette journée...",
+    "Jour 36 - Rien ne s'est passé pendant cette journée...",
+    "Jour 37 - Rien ne s'est passé pendant cette journée...",
+    "Jour 43 - Rien ne s'est passé pendant cette journée...",
+    "Jour 44 - Rien ne s'est passé pendant cette journée...",
+    "Jour 45 - Rien ne s'est passé pendant cette journée...",
+    "Jour 46 - Rien ne s'est passé pendant cette journée...",
+    "Jour 48 - Rien ne s'est passé pendant cette journée...",
+    "Jour 49 - Rien ne s'est passé pendant cette journée...",
+    "Jour 50 - Rien ne s'est passé pendant cette journée...",
+    "Jour 51 - Rien ne s'est passé pendant cette journée...",
+    "Jour 53 - Rien ne s'est passé pendant cette journée...",
+    "Jour 54 - Rien ne s'est passé pendant cette journée..."
+  ]
 }

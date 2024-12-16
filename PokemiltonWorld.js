@@ -1,38 +1,40 @@
+//PokemiltonWorld.js
+
+const locale = require("./locales/fr.json");
 const PokemiltonArena = require("./PokemiltonArena");
 const Pokemilton = require("./Pokemilton");
-const Game = require("./Game");
-
-let pokemiltonArena;
-let msg = "";
+const PokemiltonMaster = require("./PokemiltonMaster");
+const {saveGameState} = require('./Shared');
 
 class PokemiltonWorld {
   constructor() {
-    this.day = 1;
-    //this.saved_on = null;
-    this.logs = [];
+    this.day = 1; //Jour initial
+    this.logs = []; //Stockage des événements
   }
 
-  oneDayPasses(menuDay, askQuestion) {
-    //this.day++;
-    this.randomizeEvent(menuDay, askQuestion);
+  oneDayPasses(menuDay, askQuestion, pokemiltonMaster) {
+    this.day++;
+    console.log(`\nJournée ${this.day}`);
+    saveGameState(pokemiltonMaster, this)
+    this.randomizeEvent(menuDay, askQuestion, pokemiltonMaster);
   }
 
-  async randomizeEvent(menuDay, askQuestion) {
-    let num = Math.floor(Math.random()) * 2;
+  async randomizeEvent(menuDay, askQuestion, pokemiltonMaster) {
+    let num = Math.floor(Math.random() * 2);
     if (num === 0) {
-      pokemiltonArena = new PokemiltonArena();
-      await pokemiltonArena.startBattle(menuDay, askQuestion);
+      const pokemiltonArena = new PokemiltonArena();
+      await pokemiltonArena.startBattle(menuDay, askQuestion, pokemiltonMaster);
     } else {
-      msg = '\nNothing happened for this day."';
-      console.log(msg);
+      const msg = "Rien ne s'est passé pendant cette journée...";
+      console.log("\n" + msg);
       this.addLog(msg);
-      //this.oneDayPasses(); //on passe à une nouvelle journée
-      await menuDay(); //on affiche le menu
+      this.oneDayPasses(menuDay, askQuestion, pokemiltonMaster);
+      //await menuDay(); //on affiche le menu
     }
   }
 
   addLog(newLog) {
-    this.logs.push(newLog);
+    this.logs.push(locale.dayWord + " " + this.day + " - " + newLog);
   }
 }
 

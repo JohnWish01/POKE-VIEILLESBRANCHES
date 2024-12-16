@@ -1,126 +1,142 @@
-const Game = require("./Game");
+//PokemiltonArena.js
+
+//const Game = require("./Game");
+const Pokemilton = require("./Pokemilton");
+let currentPokemilton = require("./Game");
 
 let battleInProgress = 0;
-let currentPokemilton;
 
 class PokemiltonArena {
-  constructor(pokemilton_1, pokemilton_2) {
+  constructor(pokemilton_1 = null, pokemilton_2 = null) {
     this.pokemilton_1 = pokemilton_1;
     this.pokemilton_2 = pokemilton_2;
     this.roundNumber = 0;
-
-    // this.rl = readline.createInterface({
-    //   input: process.stdin,
-    //   output: process.stdout,
-    // });
   }
 
-  async startBattle(menuDay, askQuestion) {
-    console.log("Un Pokemilton sauvage apparaît !\n");
-    await askQuestion(
-      "Que voulez-vous faire ?\n1. Combattre\n2. Fuir\n",
-      (choice) => {
-        switch (choice) {
-          case "1":
-            this.choosePokemilton();
-            break;
-          case "2":
-            console.log("Vous avez évincé le combat...");
-            menuDay();
-            break;
-          default:
-            console.log("Choix invalide.");
-            this.startBattle(menuDay);
-            break;
-        }
+  async startBattle(menuDay, askQuestion, pokemiltonMaster) {
+    console.log("\nUn Pokemilton sauvage apparaît !\n");
+    while (true) {
+      const answer = await askQuestion("Que voulez-vous faire ?\n1. Combattre\n2. Fuir\n\nVotre choix: ");
+      switch (answer) {
+        case "1":
+          this.pokemilton_2 = new Pokemilton();
+          console.log(`\nVoici ses caractéristiques :\n- Niveau : ${this.pokemilton_2.level}\n- Nom : ${this.pokemilton_2.name} \n- Santé : ${this.pokemilton_2.healthPool}`);
+          await this.choosePokemilton(pokemiltonMaster, askQuestion, menuDay);
+          return;
+        case "2":
+          console.log("\nVous avez évincé le combat...");
+          await menuDay(pokemiltonMaster); // AJOUTER UNE FONCTION ALEATOIRE ?
+          return;
+        default:
+          console.log("\nChoix invalide.");
       }
-    );
+    }
   }
 
-  choosePokemilton(pokemiltonMaster) {
-    console.log("Pokemiltons in your collection :");
-    for (let i = 0; i < pokemiltonMaster.pokemiltonCollection.length; i++) {
-      console.log(
-        `${(i++, pokemiltonMaster.pokemiltonCollection[i].getStats())}`
-      );
+  async choosePokemilton(pokemiltonMaster, askQuestion, menuDay) {
+    pokemiltonMaster.showCollection();
+
+    let answer = await askQuestion("\nChoisissez votre Pokemilton : ");
+    answer = parseInt(answer, 10);
+
+    if (answer > 0 && answer <= pokemiltonMaster.pokemiltonCollection.length) {
+      this.pokemilton_1 = pokemiltonMaster.pokemiltonCollection[answer - 1];
+      currentPokemilton = this.pokemilton_1;
+      await this.startRound(askQuestion, menuDay, pokemiltonMaster);
+    } else {
+      console.log("\nChoix invalide. Veuillez sélectionner un Pokemilton valide.");
+      await this.choosePokemilton(pokemiltonMaster, askQuestion, menuDay);
+    }
+  }
+
+  async startRound(askQuestion, menuDay, pokemiltonMaster) {
+    this.roundNumber++;
+    console.log(`\nRound ${this.roundNumber} :`);
+    console.log(`\n${this.pokemilton_1.name} combat ${this.pokemilton_2.name} !`);
+    await this.playerAction(askQuestion, menuDay, pokemiltonMaster);
+  }
+
+  async playerAction(askQuestion, menuDay, pokemiltonMaster) {
+    const answer = await askQuestion("\nQue voulez-vous faire ?\n1. Attaquer\n2. Utiliser un objet\n3. Attraper\n4. Fuir\n\nVotre choix : ");
+    switch (answer) {
+      case "1":
+        this.attack(pokemiltonMaster);
+        break;
+      case "2":
+        //TO DO
+        console.log("Objet"); //Creer un moyen d'utiliser un menu choix des objets.
+        this.UseObject();
+        break;
+      case "3":
+        this.tryToCatch(askQuestion, menuDay, pokemiltonMaster);
+        break;
+      case "4":
+        console.log("\nVous fuyez le combat !");
+        menuDay(pokemiltonMaster);
+        break;
+      //Fin du combat - QUE DOIT-ON FAIRE ?
+      default:
+        console.log("\nChoix invalide. Réessayez.");
+        await this.playerAction(askQuestion, menuDay, pokemiltonMaster);
     }
 
-    this.askQuestion("Choisissez votre Pokemilton (1-3) : ", (choice) => {
-      const selectedPokemilton = this.pokemilton_1[choice - 1];
-      if (selectedPokemilton) {
-        this.startRound(selectedPokemilton);
-      } else {
-        console.log("Choix invalide.");
-        this.choosePokemilton();
+    if (this.pokemilton_2.healthPool > 0) {
+      this.wildPokemiltonAction(askQuestion, menuDay, pokemiltonMaster);
+    } else {
+      if (pokemiltonMaster.pokemiltonCollection.length < pokemiltonMaster.POKEBALLS) {
+        pokemiltonMaster.pokemiltonCollection.push(this.pokemilton_2);
       }
-    });
+      this.endBattle(menuDay, pokemiltonMaster);
+    }
   }
 
-  startRound(selectedPokemilton) {
-    console.log(`Round ${this.roundNumber + 1}:`);
-    console.log(`${pokemilton.name} is battling the wild Pokemilton !`);
-    this.playerAction(pokemilton);
-  }
-
-  async playerAction(selectedPokemilton) {
-    this.askQuestion(
-      "Que voulez-vous faire ?\n1. Attaquer\n2.Utiliser un objet\n3. Attraper\n4. Fuir",
-      (action) => {
-        switch (action) {
-          case "1":
-            this.attack(pokemilton);
-            break;
-          case "2":
-            console.log("Objet"); //Creer un moyen d'utiliser un menu choix des objets.
-            this.UseObject(pokemilton);
-            break;
-          case "3":
-            this.tryToCatch();
-            break;
-          case "4":
-            console.log("Vous fuyez le combat !");
-            break;
-          default:
-            console.log("Choix invalide...");
-            this.playerAction(pokemilton);
-            break;
-        }
-      }
-    );
-  }
-
-  attack(selectedPokemilton) {
-    console.log(`${pokemilton.name} passe à l'attaque !`);
-    const damage = pokemilton.attackRange;
+  attack() {
+    const damage = this.calculateDamage(this.pokemilton_1.attackRange, this.pokemilton_2.defenseRange);
     this.pokemilton_2.healthPool -= damage;
-    console.log(
-      `${this.pokemilton_2.name} prend ${damage} points de dommages !`
-    );
+    console.log(`\n${this.pokemilton_1.name} attaque ${this.pokemilton_2.name} et inflige ${damage} points de dégâts !`);
     this.checkBattleStatus();
   }
 
-  tryToCatch() {
+  tryToCatch(askQuestion, menuDay, pokemiltonMaster) {
     const catchChance = Math.random();
     if (catchChance < 0.5) {
-      console.log("Vous avez attrapé le Pokemilton sauvage !!");
+      console.log("\nFélicitations ! Vous avez attrapé le Pokemilton sauvage !");
     } else {
-      console.log("Le Pokemilton s'est enfuis ! ");
+      console.log("\nLe Pokemilton sauvage s'est échappé !");
     }
   }
 
-  calculateDamage(attackRange, defenseRange) {}
+  calculateDamage(attackRange, defenseRange) {
+    return Math.max(Math.floor(Math.random() * (attackRange + 1)) - defenseRange, 0); // Les dégâts ne peuvent pas être négatifs
+  }
 
-  wildPokemiltonAction() {}
+  wildPokemiltonAction(askQuestion, menuDay, pokemiltonMaster) {
+    const damage = this.calculateDamage(this.pokemilton_2.attackRange, this.pokemilton_1.defenseRange);
+    this.pokemilton_1.healthPool -= damage;
+
+    console.log(`${this.pokemilton_2.name} contre-attaque et inflige ${damage} points de dégâts à ${this.pokemilton_1.name} !`);
+
+    if (this.pokemilton_1.healthPool <= 0) {
+      console.log(`${this.pokemilton_1.name} a été vaincu !`);
+      this.endBattle(menuDay, pokemiltonMaster);
+    } else {
+      this.startRound(askQuestion, menuDay); //On passe au round suivant.
+    }
+  }
 
   checkBattleStatus() {
     if (this.pokemilton_2.healthPool <= 0) {
-      console.log(`${this.pokemilton_2.name} a été vaincu !`);
+      console.log(`\n${this.pokemilton_2.name} a été vaincu !`);
+      this.pokemilton_1.gainExperience(this.pokemilton_2.level);
     }
   }
 
-  startNewRound() {}
-
-  endBattle() {}
+  endBattle(menuDay, pokemiltonMaster) {
+    console.log("\nLe combat est terminé !");
+    this.pokemilton_1 = null;
+    this.pokemilton_2 = null;
+    menuDay(pokemiltonMaster);
+  }
 }
 
 module.exports = PokemiltonArena;
