@@ -115,12 +115,13 @@ class PokemiltonMaster {
       return;
     }
 
-    console.log("\nVotre collection de Pokemilton :");
+    console.log("\nVotre collection de Pokemilton :\n");
     this.pokemiltonCollection.forEach((pokemilton, index) => {
       console.log(`${index + 1} - ${pokemilton.name}`);
       console.log(`- Niveau : ${pokemilton.level}`);
       console.log(`- Expérience : ${pokemilton.experienceMeter}`);
-      console.log(`- Santé : ${pokemilton.healthPool}`);
+      console.log(`- Santé : ${pokemilton.healthPool}\n`);
+
     });
   }
 }

@@ -86,7 +86,7 @@ async function loadGameState() {
 
 // Demande le nom du joueur
 async function askForName() {
-  let name = await askQuestion(locale.questionMasterName);
+  let name = await askQuestion("\n" + locale.questionMasterName);
   pokemiltonMaster = new PokemiltonMaster({ name });
   console.log("\n" + locale.hello + pokemiltonMaster.name + locale.helloNext + "\n");
   world.addLog(locale.hello + pokemiltonMaster.name + locale.helloNext);
@@ -104,7 +104,7 @@ async function proposeFirstPokemilton() {
   }
 
   while (true) {
-    let answer = await askQuestion("\nChoose your first Pokemilton (1-3):");
+    let answer = await askQuestion("\nChoisissez votre 1er Pokemilton (1-3): ");
     switch (answer) {
       case "1":
         selectedPokemilton = pokemiltonsArr[0];
