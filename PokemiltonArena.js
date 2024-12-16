@@ -60,20 +60,15 @@ class PokemiltonArena {
   }
 
   async playerAction(askQuestion, menuDay, pokemiltonMaster) {
-    const answer = await askQuestion("\nQue voulez-vous faire ?\n1. Attaquer\n2. Utiliser un objet\n3. Attraper\n4. Fuir\n\nVotre choix : ");
+    const answer = await askQuestion("\nQue voulez-vous faire ?\n1. Attaquer\n2. Attraper\n3. Fuir\n\nVotre choix : ");
     switch (answer) {
       case "1":
         this.attack(pokemiltonMaster);
         break;
       case "2":
-        //TO DO
-        console.log("Objet"); //Creer un moyen d'utiliser un menu choix des objets.
-        this.UseObject();
+        this.tryToCatch(menuDay, pokemiltonMaster);
         break;
       case "3":
-        this.tryToCatch(menuDay,pokemiltonMaster);
-        break;
-      case "4":
         console.log("\nVous fuyez le combat !");
         goAway = true;
         await menuDay(pokemiltonMaster);
@@ -115,9 +110,8 @@ class PokemiltonArena {
         goAway = true;
         this.endBattle(menuDay, pokemiltonMaster);
       } else {
-        console.log("\nLe Pokemilton sauvage s'est échappé !");
-        goAway = true;
-        this.endBattle(menuDay, pokemiltonMaster);
+        console.log("\nLa capture a échoué !");
+        goAway = false;
         return;
       }
     } else {
