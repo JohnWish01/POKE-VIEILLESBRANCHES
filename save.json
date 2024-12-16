@@ -1,41 +1,32 @@
 {
-  "saved_on": "2024-12-16T15:57:20.413Z",
+  "saved_on": "2024-12-16T18:04:29.078Z",
   "PokemiltonMaster": {
     "name": "Manu",
     "pokemiltonCollection": [
       {
-        "name": "AZERty",
-        "level": 2,
-        "experienceMeter": 6,
-        "attackRange": 5,
-        "defenseRange": 3,
-        "healthPool": 10,
-        "catchPhrase": "Pokemilton, go!"
-      },
-      {
         "name": "RéMeh",
         "level": 1,
-        "experienceMeter": 0,
+        "experienceMeter": 4,
         "attackRange": 6,
         "defenseRange": 1,
-        "healthPool": 29,
+        "healthPool": 28,
         "catchPhrase": "Let the battle begin!"
       },
       {
-        "name": "InTine",
+        "name": "AleMar",
         "level": 1,
         "experienceMeter": 0,
-        "attackRange": 7,
+        "attackRange": 1,
         "defenseRange": 1,
-        "healthPool": 12,
-        "catchPhrase": "Let the battle begin!"
+        "healthPool": 0,
+        "catchPhrase": "Pokemilton, go!"
       }
     ],
-    "healingItems": 2,
+    "healingItems": 1,
     "reviveItems": 3,
     "POKEBALLS": 10
   },
-  "day": 69,
+  "day": 114,
   "logs": [
     "Jour 1 - Bonjour Master Manu, votre aventure commence!",
     "Jour 1 - Guiliea été ajouté à votre collection",
@@ -74,6 +65,25 @@
     "Jour 61 - Rien ne s'est passé pendant cette journée...",
     "Jour 64 - Rien ne s'est passé pendant cette journée...",
     "Jour 67 - Rien ne s'est passé pendant cette journée...",
-    "Jour 68 - Rien ne s'est passé pendant cette journée..."
+    "Jour 68 - Rien ne s'est passé pendant cette journée...",
+    "Jour 70 - Rien ne s'est passé pendant cette journée...",
+    "Jour 72 - Rien ne s'est passé pendant cette journée...",
+    "Jour 75 - Rien ne s'est passé pendant cette journée...",
+    "Jour 76 - Rien ne s'est passé pendant cette journée...",
+    "Jour 77 - Rien ne s'est passé pendant cette journée...",
+    "Jour 79 - Rien ne s'est passé pendant cette journée...",
+    "Jour 82 - Rien ne s'est passé pendant cette journée...",
+    "Jour 83 - Rien ne s'est passé pendant cette journée...",
+    "Jour 92 - Rien ne s'est passé pendant cette journée...",
+    "Jour 94 - Rien ne s'est passé pendant cette journée...",
+    "Jour 95 - Rien ne s'est passé pendant cette journée...",
+    "Jour 97 - Rien ne s'est passé pendant cette journée...",
+    "Jour 98 - Rien ne s'est passé pendant cette journée...",
+    "Jour 100 - Rien ne s'est passé pendant cette journée...",
+    "Jour 103 - Rien ne s'est passé pendant cette journée...",
+    "Jour 104 - Rien ne s'est passé pendant cette journée...",
+    "Jour 106 - Rien ne s'est passé pendant cette journée...",
+    "Jour 111 - Rien ne s'est passé pendant cette journée...",
+    "Jour 113 - Rien ne s'est passé pendant cette journée..."
   ]
 }

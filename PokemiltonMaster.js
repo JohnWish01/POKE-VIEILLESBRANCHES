@@ -63,7 +63,7 @@ class PokemiltonMaster {
   async revivePokemilton(askQuestion) {
     if (this.reviveItems > 0) {
       this.showCollection();
-      const answer = await askQuestion("Quel Pokemilton voulez-vous ressusciter ? : ");
+      const answer = await askQuestion("\nQuel Pokemilton voulez-vous ressusciter ? : ");
 
       let index = parseInt(answer) - 1;
       if (index >= 0 && index <= this.pokemiltonCollection.length) {
@@ -73,11 +73,11 @@ class PokemiltonMaster {
         this.reviveItems -= 1;
         console.log(`\n${this.pokemiltonCollection[index].name} a été ressuscité avec ${reviveAmount} points de santé ! Potions revive restantes : ${this.reviveItems}`);
       } else {
-        console.log("\nChoix invalide");
+        console.log("\nChoix invalide. Aucune action n'a été effectuée.");
         return;
       }
     } else {
-      console.log("\nVous n'avez plus de potions de résurection !");
+      console.log("\nVous n'avez plus de potion de résurection !");
     }
   }
 
@@ -89,11 +89,11 @@ class PokemiltonMaster {
     }
 
     this.showCollection();
-    const answer = await askQuestion("\nQuel Pokemilton voulez-vous libérer ? :");
+    const answer = await askQuestion("\nQuel Pokemilton voulez-vous libérer ? : ");
     const index = parseInt(answer, 10) - 1;
 
     if (isNaN(index) || index < 0 || index >= this.pokemiltonCollection.length1) {
-      console.log("\nrChoix invalide. Aucune action n'a été effectuée.");
+      console.log("\nChoix invalide. Aucune action n'a été effectuée.");
       return;
     }
 

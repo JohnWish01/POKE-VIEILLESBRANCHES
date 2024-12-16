@@ -8,7 +8,6 @@ const PokemiltonWorld = require("./PokemiltonWorld");
 const fs = require("fs"); // Pour gérer le système de fichiers
 const path = require("path");
 const { saveGameState } = require("./Shared");
-const status = "";
 
 // Création d'une interface pour lire et écrire dans la console
 const rl = readline.createInterface({
@@ -33,7 +32,6 @@ async function loadGameState() {
   const filePath = path.resolve("save.json"); // Résolution du chemin du fichier
   const initialData = []; // Données initiales vides
 
-  console.clear();
   // Vérification si le fichier existe
   if (!fs.existsSync(filePath)) {
     console.log("\n", locale.jsonNotFound, "\n");
@@ -48,12 +46,12 @@ async function loadGameState() {
     const jsonString = await fs.promises.readFile(filePath, "utf8");
 
     if (jsonString.trim().length === 0) {
-      console.log(locale.jsonEmpty, "\n");
+      console.log("\n" + locale.jsonEmpty, "\n");
       world = new PokemiltonWorld(); // Initialisation d'un jeu exemple
       return;
     } else {
       // Demande à l'utilisateur s'il veut charger la partie sauvegardée
-      let answer = await askQuestion(locale.questionLoadData);
+      let answer = await askQuestion("\n" + locale.questionLoadData);
 
       if (answer.toLowerCase() === "oui") {
         // Si l'utilisateur accepte, on parse les données JSON
@@ -169,6 +167,7 @@ async function menuDay(pokemiltonMaster) {
         return; // Quitte la fonction une fois la journée terminée
       case "8": // Option de sortie propre
         console.log("\n" + locale.goodbye + "\n");
+        endBonus();
         rl.close();
         process.exit(0);
       default:
@@ -189,8 +188,41 @@ async function startGame() {
     }
     await menuDay(pokemiltonMaster); // Lancer la boucle du menu principal
   } catch (error) {
-    console.error("Error while processing JSON file:", error);
+    console.error(locale.errorParsing, error);
+    world.addLog(locale.errorParsing);
   }
+}
+
+function endBonus() {
+  console.log("            ⢀⣴⡆⠀⠀⠀⠀⠀⠀                             ");
+  console.log("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⠋⠉⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⡇⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⠀⠀⠀⠀⠀⠀⠀⠀⣸⡏⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⠀⠀⠀⠀⠀⠀⠀⢰⣿⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⠤⣤⣤⣤⣶⣴⣶⣶⣦⣤⣄");
+  console.log("⠀⠀⠀⠀⠀⠀⠀⣧⡏⠀⠀⠀⠀⢸⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣾⣻⣭⣽⡷⠟⠋⠉⠀⠀⣿⣿⣿⣿⡿⠏");
+  console.log("⠀⠀⠀⠀⠀⠀⠀⣇⡇⠀⠀⣀⣠⣾⣷⠶⠶⠶⣶⣦⣤⣤⣄⣀⣴⣯⣯⠿⠛⠉⠀⠀⠀⠀⠀⠀⢀⡤⣾⡿⠟⠁⠀⠀⠀");
+  console.log("⠀⠀⠀⠀⠀⠀⠀⠯⣇⢔⡞⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢨⠿⠋⠀⠀⠀⠀⠀⣀⣀⡤⣤⡶⠟⠋⠁⠀⠀⠀⠀⠀⠀");
+  console.log("⠀⠀⠀⠀⠀⠀⠀⢰⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣾⠷⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⠀⠀⠀⠀⠀⠀⢀⣟⣀⣶⣖⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⣶⡶⣖⡄⠀⠉⠙⢿⡅⠀⠀⠀⠀⠀⢀⣀⣠⣤⣶⣶⣶⣶⣶⣶⣶");
+  console.log("⠀⠀⠀⠀⠀⠀⣻⡇⣿⣿⣀⣽⡆⠀⠀⠀⠀⠀⠀⠀⢰⣿⠉⢿⣷⠀⠀⠀⢸⡆⠀⠀⢀⣠⡾⠟⠟⠋⠉⠉⠀⠀⠀⠀⢠⡿");
+  console.log("⠀⠀⠀⠀⠀⢀⡟⠀⠹⠿⠿⠟⠁⠠⠴⠦⠀⠀⠀⠀⠻⣿⣿⣿⡿⠀⠀⠀⢹⡷⠟⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡿⡏");
+  console.log("⠀⠀⠀⠀⣠⣾⠿⣧⡀⠀⢤⣄⣀⣴⡟⠶⣤⣄⠀⠀⡀⠀⠉⠋⢁⣀⠀⠀⢸⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⢣⠃");
+  console.log("⠀⠀⠀⠀⣿⡇⠀⠘⡇⠀⠀⢹⡾⠉⠀⠀⠀⠉⡭⡯⠋⠀⡤⣶⠟⠻⣷⢤⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡤⣾⢃⡎⠀");
+  console.log("⠀⠀⠀⠀⢯⣷⣤⡾⠇⠀⠀⠀⣷⠀⠀⠀⠀⢠⣿⠃⠀⠀⣿⣧⠀⠀⠀⣿⢹⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣿⣗⣫⠥");
+  console.log("⠀⠀⠀⠀⠀⠈⢷⡄⠀⠀⠀⠀⣿⣇⠀⠀⠀⣯⠏⠀⠀⠀⠀⠻⣷⣤⡶⠋⡟⠀⠀⢰⢾⠛⠛⠛⠛⠛⠛⠛⠛⠁⠀⠀⠀");
+  console.log("⠀⠀⠀⠀⠀⠀⠀⢻⣧⠀⠀⠀⠈⠛⠶⣶⡿⠋⠀⠀⠀⠀⠀⠀⠀⢀⢤⣾⢻⣧⠀⠀⡟⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⠀⠀⠀⠀⠀⠀⠀⣴⡏⠿⣦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⣶⣿⠵⠋⠸⡏⣎⣷⡈⢣⣹⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⠀⠀⠀⠀⠀⠀⢰⣿⣀⠀⠀⠉⠙⠲⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀⠀⣷⣴⠟⠁⠀⣈⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⠀⠀⠀⠀⠀⣀⡿⢹⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⣶⡄⠀⠀⠀⠀⠀⠀⠀⠀⠘⣆⡴⠾⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⣿⢿⣇⣠⣯⡽⣧⣇⣇⠀⠀⠀⠀⠀⠀⠀⢲⡇⡟⠀⠀⠀⠀⠀⠀⠀⢀⣷⣲⣽⢦⣄⣀⣴⣶⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⡿⣼⣿⣿⠁⠀⠀⠉⢿⡀⠀⠀⠀⠀⠀⠀⢸⣷⡇⠀⠀⠀⠀⠀⠀⠀⣾⠋⠁⠀⠀⣰⢟⣿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⣿⠉⠁⣿⡄⠀⠀⠀⠈⣧⠀⠀⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⣰⠏⠀⠀⠀⠀⣿⠁⣸⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⢹⡆⠀⣏⡇⠀⠀⠀⠀⠘⣷⡄⠀⠀⠀⠀⢸⡏⠀⠀⠀⠀⠀⠀⣰⠇⠀⠀⠀⠀⢸⠁⣼⣻⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⠀⢷⡄⠈⡟⠀⠀⠀⠀⠀⠘⣾⡄⠀⠀⠀⠸⡇⠀⠀⠀⠀⠀⣰⡇⠀⠀⠀⠀⢀⡇⠀⣧⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⠀⠀⢻⣧⣷⣀⣀⣀⠀⠀⠀⠘⣷⣄⣀⡀⢯⣧⠀⠀⠀⢀⡿⠃⠀⠀⠀⠀⠀⣿⡧⣧⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
+  console.log("⠀⠀⠀⠉⠉⠀⠀⠈⠉⠉⠉⠙⠻⠿⠾⠾⠻⠓⢷⠶⡶⡿⠿⠛⠛⠓⠒⠒⡟⠛⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀");
 }
 
 module.exports = { startGame, currentPokemilton };
