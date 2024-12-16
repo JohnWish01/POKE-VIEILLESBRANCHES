@@ -83,9 +83,6 @@ class PokemiltonArena {
     if (this.pokemilton_2.healthPool > 0) {
       this.wildPokemiltonAction(askQuestion, menuDay, pokemiltonMaster);
     } else {
-      if (pokemiltonMaster.pokemiltonCollection.length < pokemiltonMaster.POKEBALLS) {
-        pokemiltonMaster.pokemiltonCollection.push(this.pokemilton_2);
-      }
       this.endBattle(menuDay, pokemiltonMaster);
     }
   }

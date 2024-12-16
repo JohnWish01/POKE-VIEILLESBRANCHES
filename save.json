@@ -1,5 +1,5 @@
 {
-  "saved_on": "2024-12-15T23:14:17.053Z",
+  "saved_on": "2024-12-16T08:35:53.560Z",
   "PokemiltonMaster": {
     "name": "Manu",
     "pokemiltonCollection": [
@@ -17,7 +17,7 @@
     "reviveItems": 3,
     "POKEBALLS": 10
   },
-  "day": 56,
+  "day": 58,
   "logs": [
     "Jour 1 - Bonjour Master Manu, votre aventure commence!",
     "Jour 1 - Guiliea été ajouté à votre collection",
@@ -50,6 +50,7 @@
     "Jour 50 - Rien ne s'est passé pendant cette journée...",
     "Jour 51 - Rien ne s'est passé pendant cette journée...",
     "Jour 53 - Rien ne s'est passé pendant cette journée...",
-    "Jour 54 - Rien ne s'est passé pendant cette journée..."
+    "Jour 54 - Rien ne s'est passé pendant cette journée...",
+    "Jour 57 - Rien ne s'est passé pendant cette journée..."
   ]
 }
